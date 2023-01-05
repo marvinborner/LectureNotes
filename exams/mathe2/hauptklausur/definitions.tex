@@ -1,0 +1,152 @@
+%%%% START OF PREAMBLE
+% Copyright (c) 2021 Frederik, Franz, Marvin
+% Copyright (c) 2022 Linus, Benny, Marvin
+\usepackage[a4paper, inner=1cm, outer=1cm, top=2cm, bottom=2cm, bindingoffset=0cm]{geometry}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{braket}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{colortbl}
+\usepackage{environ}
+\usepackage{graphicx,tikz,xcolor,color,float,titlesec}
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+\usepackage{gauss}
+\usepackage{polynom}
+\usepackage{bm}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+\usepackage[ngerman]{babel}
+\usetikzlibrary{matrix,shapes,trees}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\setlength\parindent{0pt}
+\definecolor{ochsblau}{RGB}{26,122,219}
+\definecolor{ochsgelb}{RGB}{245,209,168}
+\definecolor{ochsorange}{RGB}{243,92,43}
+\renewcommand{\headrulewidth}{2pt}
+\let\oldheadrule\headrule
+\renewcommand{\headrule}{\color{ochsgelb}\oldheadrule}
+\newcommand\bracketify[1]{\lbrack#1\rbrack}
+\titleformat{\section}{\normalfont\large\bfseries\color{ochsblau}}{Aufgabe \thesection.\ }{0em}{\bracketify}
+%%%% END OF PREAMBLE
+
+%\usepackage{background}
+%\backgroundsetup{
+%  position=current page.east,
+%  angle=-90,
+%  nodeanchor=east,
+%  vshift=-5mm,
+%  hshift=1cm,
+%  opacity=1,
+%  scale=3,
+%  contents=Entwurf
+%}
+
+\newcommand\namesnstuff{
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[L,LO]{\textcolor{ochsblau}{\textbf{Name:}}}
+    \fancyhead[C,CO]{\textcolor{ochsblau}{\textbf{MFI2 - SS22}}}
+    \fancyhead[R,RO]{\textcolor{ochsblau}{\textbf{Hauptklausur}}}
+    \fancyfoot[C,CO]{\thepage}
+    \setlength{\headheight}{13.6pt}
+    
+    \vspace{-2.0cm}
+    \noindent\includegraphics[width=0.2\textwidth]{../ochs_logo.png}
+    \begin{minipage}[b]{0.6\textwidth}
+    	\centering
+    	\textcolor{ochsblau}{\textbf{\Large Mathematik 2 für Informatik}}\\
+    	\vspace{3mm}
+    	Peter Ochs, Tobias Nordgauer\\
+    	\vspace{3mm}
+    	Sommersemester 2022
+    \end{minipage}
+    \noindent\includegraphics[width=0.2\textwidth]{../uni_logo.png}\\
+    \begin{center}\textcolor{ochsblau}{\textbf{Hauptklausur Gedächtnisprotokoll}}\end{center}
+}
+
+\newcommand\refiff[1]{\stackrel{\text{#1}}{\iff}}
+\newcommand\refimp[1]{\stackrel{\text{#1}}{\implies}}
+\newcommand\refeq[1]{\stackrel{\text{#1}}{=}}
+\newcommand\refless[1]{\stackrel{\text{#1}}{<}}
+\newcommand\refleads[1]{\stackrel{\text{#1}}{\leadsto}}
+
+\newcommand\NR{\textbf{Nebenrechnung: }}
+\newcommand\proposition{\textbf{Behauptung: }}
+\newcommand\toprove{\textbf{Zu zeigen: }}
+\newcommand\task{\textbf{Aufgabe: }}
+\newcommand\defi{\textbf{Definition: }}
+
+% denglish ftw
+\newcommand\da{\text{ da }}
+\newcommand\with{\text{ mit }}
+\newcommand\und{\text{ und }}
+\newcommand\oder{\text{ oder }}
+\newcommand\for{\text{ für }}
+\newcommand\when{\text{ wenn }}
+\newcommand\sei{\text{ sei }}
+
+\newcommand\Real{\mathrm{Re}} % Realteil
+\newcommand\Imag{\mathrm{Im}} % Imaginärteil
+
+\newcommand\N{\mathbb{N}}
+\newcommand\R{\mathbb{R}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\C{\mathbb{C}}
+\newcommand\Q{\mathbb{Q}}
+\renewcommand\P{\mathbb{P}}
+\renewcommand\O{\mathcal{O}}
+\newcommand\pot{\mathcal{P}}
+
+\newcommand\rank{\mathrm{rank}}
+\newcommand\lin{\mathrm{Lin}}
+\renewcommand\det{\mathrm{det}}
+\renewcommand\dim{\mathrm{dim}}
+
+\renewcommand\u{\boldsymbol{u}}
+\renewcommand\v{\boldsymbol{v}}
+\newcommand\w{\boldsymbol{w}}
+
+% for vertical line in gmatrix
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\g@matrix
+ {\vbox\bgroup}
+ {\vbox\bgroup\normalbaselines}
+ {}{}
+\makeatother
+\newcommand{\gvline}{%
+  \hspace{-\arraycolsep}%
+  \strut\vrule
+  \hspace{-\arraycolsep}%
+}
+
+% lol
+\makeatletter
+\renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+\def\qedsymbol{\sc q.e.d.} % hmm?
+
+\newenvironment{induktion}{\renewcommand*{\proofname}{Beweis durch vollständige Induktion}\begin{proof}$ $\newline}{\end{proof}}
+\newcommand\IA[1]{\textbf{Induktionsanfang ($#1$):}}
+\newcommand\IV[1]{\textbf{Induktionsvoraussetzung:} Die Behauptung gelte für ein beliebiges aber festes $#1$.\\}
+\newcommand\IS[1]{\textbf{Induktionsschritt ($#1$):}}
+
+\newenvironment{gegenbeweis}{\renewcommand*{\proofname}{Beweis durch Gegenbeweis}\begin{proof}}{\end{proof}}
+\newenvironment{gegenbeispiel}{\renewcommand*{\proofname}{Beweis durch Gegenbeispiel}\begin{proof}}{\end{proof}}
+
+\NewEnviron{splitty}{\begin{displaymath}\begin{split}\BODY\end{split}\end{displaymath}}
+\newcolumntype{C}{>{$}c<{$}} % math-mode column
+
+\DeclareMathOperator{\ggT}{ggT}
+
+\newlist{abc}{enumerate}{10}
+\setlist[abc]{label=(\alph*)}
+
+\newlist{num}{enumerate}{10}
+\setlist[num]{label=\arabic*.}
+
+\newlist{rom}{enumerate}{10}
+\setlist[rom]{label=(\roman*)}
+

@@ -1,0 +1,61 @@
+\documentclass[a4paper, 11pt]{article}
+\input{../definitions}
+\begin{document}
+\namesnstuff
+
+\textbf{Bedingungen: 120min Zeit, einseitig beschriebenes Cheat-Sheet}
+
+\section{10 Punkte}
+Finden Sie mithilfe des Chinesischen Restsatzes alle $x\in\Z$, sodass
+\begin{align*}
+    x&\equiv2\pmod{3}\\
+    x&\equiv3\pmod{4}\\
+    x&\equiv5\pmod{7}
+\end{align*}
+gilt.
+
+\section{10 Punkte}
+Betrachten Sie die Matrix $$A=\begin{pmatrix}1&7&0&-1\\0&1&14&6\\-1&-2&1&-1\\4&-7&0&2\end{pmatrix}\in(\Z/7\Z)^{4\times4}$$
+Bestimmen Sie, falls existent, die Inverse von $A$. Geben Sie die Einträge von $A^{-1}$ mit den kanonischen Repräsentaten $\{0,1,2,3,4,5,6\}$ aus $\Z/7\Z$ an.
+
+\textit{Beachten Sie:} Wie üblich sind die Zahlen als Restklassen zu lesen.
+
+\section{4 + 3 + 3 = 10 Punkte}
+Betrachten Sie die Matrix $$A=\begin{pmatrix}5&3&-3\\0&-1&0\\6&3&-4\end{pmatrix}\in\R^{3\times3}.$$
+\begin{abc}
+    \item Bestimmen Sie alle Eigenwerte von $A$ und die zugehörigen Eigenräume.
+    \item Entscheiden Sie über Diagonalisierbarkeit von $A$ und geben Sie gegebenenfalls eine Diagonalmatrix $D$ und eine invertierbare Matrix $S$ an, sodass $S^{-1}AS = D$.
+    \item Bestimmen Sie $A^n$ für $n=10$.
+\end{abc}
+
+\section{3 + 4 + 3 = 10 Punkte}
+Betrachten Sie für $I := \begin{pmatrix}0&1\\-1&0\end{pmatrix}$ und $E_2 := \begin{pmatrix}1&0\\0&1\end{pmatrix}\in\R^{2\times2}$ die Menge $$V := \{\lambda\cdot E_2 + \mu \cdot I\mid\lambda,\mu\in\R\}$$
+\begin{abc}
+    \item Zeigen Sie: $V$ ist ein $\R$-Untervektorraum von $\R^{2\times2}$.
+    \item Bestimmen Sie eine Basis $\mathcal{B}$ von $V$ als $\R$-Vektorraum und folgern Sie die Dimension von $V$.
+    \item Betrachten Sie nun den Vektorraum $U:=\R[X]_{\le 3}$ der Polynome mit Koeffizienten aus $\R$ vom Grad $\le3$ und die Basis $\mathcal{A}:=(X^0,X,X^2,X^3)$ (dass $\mathcal{A}$ eine Basis von $U$ ist, muss nicht gezeigt werden). Sei außerdem $$\varphi: U\to V,\quad p(X)\mapsto p(I)$$ die Abbildung, die $I$ in ein Polynom aus $U$ anstelle der Unbekannten $X$ einsetzt (dabei ist $I^0$ definiert als die Einheitsmatrix $E_2$). Diese Abbildung ist linear und wohldefiniert (muss nicht gezeigt werden). Bestimmen Sie die Darstellungsmatrix $M_\mathcal{A}^\mathcal{B}(\varphi)$ von $\varphi$ bezüglich der Basen $\mathcal{A}$ und $\mathcal{B}$.
+\end{abc}
+
+\section{3 + 3 + 4 = 10 Punkte}
+Sei $\varphi: V\to V$ ein Isomorphismus zwischen zwei $K$-Vektorräumen.
+\begin{abc}
+    \item Zeigen Sie: $0$ ist kein Eigenwert von $\varphi$.
+    \item Zeigen Sie: Ist $\lambda$ Eigenwert von $\varphi$, so ist $\lambda^{-1}$ Eigenwert von $\varphi^{-1}$.
+    \item Sei nun $(V,\braket{\cdot,\cdot})$ ein reeler Prä-Hilbertraum und $\phi: V\to V$ eine orthogonale Abbildung, d.h. es gilt für alle $v,w\in V$:
+    $$\braket{\phi(v), \phi(w)} = \braket{v,w}$$ Zeigen Sie: Die einzigen möglichen Eigenwerte von $\phi$ sind $\pm1$.
+\end{abc}
+
+\section{2 + 2 + 2 + 2 + 2 = 10 Punkte}
+Entscheiden Sie über folgende Aussagen, ob sie wahr oder falsch sind. Begründen Sie ihre Antwort.
+\begin{abc}
+    \item Für zwei Polynome $p,q\in\Z/20\Z[X]$ gilt stets: $\mathrm{grad}(pq)=\mathrm{grad}(p)+\mathrm{grad}(q)$.
+    \item $X^2+4$ hat in $\Z/13\Z$ genau 2 Nullstellen.
+    \item Es gibt ganze Zahlen $r,s\in\Z$, sodass $3=r\cdot42+s\cdot99$
+    \item Jede lineare Abbildung $\varphi: \R^3\to\R^3$ ist ein Isomorphismus.
+    \item Jede Gruppe, deren Ordnung eine Primzahl ist, ist zyklisch.
+\end{abc}
+\par\hrulefill\par
+\begin{center}
+    \textbf{Danke für die Hilfe an alle Beteiligten.\\Keine Garantie auf Korrektheit.\\\LaTeX\ von Marvin Borner.}
+\end{center}
+\end{document}

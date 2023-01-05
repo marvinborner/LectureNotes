@@ -1,0 +1,39 @@
+\usepackage{braket}
+\usepackage{polynom}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{svg}
+\usepackage{environ}
+\usepackage{tikz,pgfplots}
+\usepackage{titleps}
+\usepackage{tcolorbox}
+
+\pgfplotsset{width=10cm,compat=1.15}
+\usepgfplotslibrary{external}
+\usetikzlibrary{calc,trees,positioning,arrows,fit,shapes}
+%\tikzexternalize
+\setcounter{MaxMatrixCols}{20}
+
+\newpagestyle{main}{\sethead{\toptitlemarks\thesection\quad\sectiontitle}{}{\thepage}\setheadrule{.4pt}}
+\pagestyle{main}
+
+\newtcolorbox{defi-box}{colback=gray!5!white,arc=0pt,outer arc=0pt,colframe=gray!60!black}
+\newtcolorbox{bsp-box}{colback=orange!5!white,arc=0pt,outer arc=0pt,colframe=orange!60!black}
+\newtcolorbox{visu-box}{colback=cyan!5!white,arc=0pt,outer arc=0pt,colframe=cyan!60!black}
+\NewEnviron{splitty}{\begin{displaymath}\begin{split}\BODY\end{split}\end{displaymath}}
+
+\newcommand\N{\mathbb{N}}
+\newcommand\R{\mathbb{R}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\newcommand\C{\mathbb{C}}
+\renewcommand\P{\mathbb{P}}
+\renewcommand\O{\mathcal{O}}
+\newcommand\pot{\mathcal{P}}
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+\newcommand{\bigcupdot}{\dot{\bigcup}}
+
+\newcommand\refiff[1]{\stackrel{\text{#1}}{\iff}}
+\newcommand\refimp[1]{\stackrel{\text{#1}}{\implies}}
+\newcommand\refeq[1]{\stackrel{\text{#1}}{=}}
+\newcommand\refless[1]{\stackrel{\text{#1}}{<}}

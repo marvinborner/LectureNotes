@@ -1,0 +1,68 @@
+\usepackage{braket}
+\usepackage{polynom}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{svg}
+\usepackage{environ}
+\usepackage{mathtools}
+\usepackage{tikz,pgfplots}
+\usepackage{titleps}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{soul}
+\usepackage{forest}
+
+\pgfplotsset{width=10cm,compat=1.15}
+\usepgfplotslibrary{external}
+\usetikzlibrary{calc,trees,positioning,arrows,arrows.meta,fit,shapes,chains,shapes.multipart}
+%\tikzexternalize
+\setcounter{MaxMatrixCols}{20}
+\graphicspath{{assets}}
+
+\newpagestyle{main}{\sethead{\toptitlemarks\thesection\quad\sectiontitle}{}{\thepage}\setheadrule{.4pt}}
+\pagestyle{main}
+
+\newtcolorbox{proof-box}{title=Proof,colback=green!5!white,arc=0pt,outer arc=0pt,colframe=green!60!black}
+\newtcolorbox{bsp-box}{title=Example,colback=orange!5!white,arc=0pt,outer arc=0pt,colframe=orange!60!black}
+\newtcolorbox{visu-box}{title=Visualisation,colback=cyan!5!white,arc=0pt,outer arc=0pt,colframe=cyan!60!black}
+\newtcolorbox{bem-box}{title=Note,colback=gray!5!white,arc=0pt,outer arc=0pt,colframe=gray!60!black}
+\newtcolorbox{prob-box}{title=Problem,colback=gray!5!white,arc=0pt,outer arc=0pt,colframe=gray!60!black}
+\NewEnviron{splitty}{\begin{displaymath}\begin{split}\BODY\end{split}\end{displaymath}}
+
+\newcommand\toprove{\textbf{Zu zeigen: }}
+
+\newcommand\N{\mathbb{N}}
+\newcommand\R{\mathbb{R}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\newcommand\C{\mathbb{C}}
+\renewcommand\P{\mathbb{P}}
+\renewcommand\O{\mathcal{O}}
+\newcommand\pot{\mathcal{P}}
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+\newcommand{\bigcupdot}{\dot{\bigcup}}
+
+\DeclareMathOperator{\ggT}{ggT}
+\DeclareMathOperator{\kgV}{kgV}
+
+\newlist{abc}{enumerate}{10}
+\setlist[abc]{label=(\alph*)}
+
+\newlist{num}{enumerate}{10}
+\setlist[num]{label=\arabic*.}
+
+\newlist{rom}{enumerate}{10}
+\setlist[rom]{label=(\roman*)}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+\def\qedsymbol{\sc q.e.d.} % hmm?
+
+\lstset{
+	basicstyle=\ttfamily,
+	escapeinside={(*@}{@*)},
+	numbers=left,
+	mathescape
+}

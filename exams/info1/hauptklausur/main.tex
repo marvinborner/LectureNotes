@@ -1,0 +1,513 @@
+\documentclass[a4paper, 11pt]{article}
+
+% Packages
+\usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.5cm, bottom=2.5cm, bindingoffset=0cm]{geometry}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{fontspec,xunicode,xltxtra}
+\usepackage{biblatex}
+\usepackage{csquotes}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage{mdframed}
+
+% GERMAN
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+\usepackage[ngerman]{babel}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+
+\setlength\partopsep{-\topsep}
+\addtolength\partopsep{-\parskip}
+\addtolength\partopsep{0cm}
+
+\begin{document}
+
+\title{\vspace{-2.0cm}Hauptklausur zu Informatik 1\\Gedächtnisprotokoll}
+\author{Klaus Ostermann}
+\date{\today}
+
+\maketitle
+
+\begin{center}
+	Hilfsmittel: Stift\\
+	Zeit: 90min\\
+	\textbf{Keine Garantie auf korrekte Aufgaben.\\Die Reihenfolge der Aufgaben war je Klausur randomisiert.}
+\end{center}
+
+\section{Programmieraufgaben}
+
+\subsection*{Aufgabe 1}
+\textit{Beschreibung}: Ein Bauteil (\enquote{part}) besteht aus einem Namen (\enquote{name}), einem Herstellungspreis (\enquote{cost}) und Bestandteilen (\enquote{components}), die selbst wieder Bauteile sind und Bestandteile haben können. Die Gesamtkosten eines Bauteils sind der Herstellungspreis und die Summe der Preise der Bestandteile.
+
+\subsubsection*{Teil 1}
+Programmieren Sie eine Datendefinition für Bauteile (\enquote{part}) und geben Sie ein Beispiel mit zwei Bestandteilen mit Konstantendefinitionen an.
+
+\subsubsection*{Teil 2}
+Programmieren Sie eine Funktion \texttt{total-cost}, die ein Bauteil annimt und die Gesamtkosten berechnet.\\\textit{Tipp}: Sie können die Aufgabe entweder mit zwei rekursiven Funktionen oder mithilfe von higher-order-functions (\texttt{map}, \texttt{foldr}) lösen.
+
+\subsection*{Aufgabe 2}
+
+\subsubsection*{Teil 1}
+Programmieren Sie eine Funktion \texttt{contains-smaller-zero?} nach der Signatur mithilfe von Rekursion.
+\begin{minted}{racket}
+; (list-of Number) -> Boolean
+(check-expect (contains-smaller-zero? 1 2 3 -4) #true)
+(check-expect (contains-smaller-zero? 1 2 3 0) #false)
+\end{minted}
+
+\subsubsection*{Teil 2}
+Programmieren Sie eine higher-order Funktion \texttt{contains?} mithilfe von Rekursion und einem Prädikat mit der Signatur \texttt{(X -> Boolean)}.\\\textit{Tipp}: Orientieren Sie sich an Ihrer Funktion aus Teil 1.
+
+\subsubsection*{Teil 3}
+Programmieren Sie \texttt{contains-smaller-zero?} und \texttt{contains-empty-string?} mithilfe der \texttt{contains?} Funktion aus Teil 2, sodass die folgenden Tests erfüllt werden.
+\begin{minted}{racket}
+(check-expect (contains-empty-string? (list "a" "b" "c" "")) #true)
+(check-expect (contains-empty-string? (list "a" "b" "c" "d")) #false)
+\end{minted}
+
+\section{Multiple-Choice}
+Es gab 40 Fragen mit je 4 Antwortmöglichkeiten mit je einer korrekten Antwort.
+
+\subsection*{Frage 1}
+\textit{Was ist der Vorteil des Templates für Summentypen?}\\
+Das Template stellt sicher, dass man...
+\begin{enumerate}[label=$\square$]
+	\item alle Alternativen des Summentyps durch Funktionen erzeugen kann.
+	\item alle Alternativen des Summentyps im Funktionskörper behandelt.
+	\item alle Alternativen des Summentyps durch Tests abdeckt.
+	\item alle Alternativen des Summentyps durch Prädikate voneinander unterscheiden kann.
+\end{enumerate}
+
+\subsection*{Frage 2}
+\textit{Wozu reduziert der folgende Ausdruck in der BSL in einem Schritt?}
+\begin{minted}{racket}
+(cond
+  [#true (+2 2)]
+  [(> 1 0) (+ 1 1)])
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(+ 2 2)|
+	\item \mint{racket}|(cond [#true (+ 2 2)])|
+	\item \mint{racket}|(cond [#true 4] [(> 1 0) (+ 1 1)])|
+	\item \mint{racket}|4|
+\end{enumerate}
+
+\subsection*{Frage 3}
+\textit{Was ergibt die Auswertung des folgenden Ausdrucks?}
+\begin{minted}{racket}
+(quasiquote (+ 4 (unquote (+ 2 5)) 5))
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(list + 4 (list + 2 5))|
+	\item \mint{racket}|(list '+ 4 7 5)|
+	\item \mint{racket}|`(+ 4 ,(+ 2 5) 5)|
+	\item \mint{racket}|(list + 4 7 5)|
+\end{enumerate}
+
+\subsection*{Frage 4}
+\textit{Was ist eine wichtige Eigenschaft von Tests?}
+\begin{enumerate}[label=$\square$]
+	\item Wenn alle Tests wie erwartet ablaufen, ist das Programm fehlerfrei.
+	\item Tests können als Teil der Spezifikation einer Funktion verwendet werden.
+	\item Tests stellen sicher, dass eine Rekursion immer terminiert.
+	\item Mit Tests kann garantiert werden, dass eine Funktion im Programm immer mit den richtigen Typen aufgerufen wird.
+\end{enumerate}
+
+\begin{mdframed}
+	\noindent\textit{Gegeben sei folgendes Programm:}
+	\begin{minted}{racket}
+(define (f x)
+  (cond
+    [(empty? x) empty]
+    [(cons? x) (cons (first x) (g (rest x)))]))
+
+(define (g x)
+  (cond
+    [(empty? x) empty]
+    [(empty? (rest x)) empty]
+    [(cons? x) (f (rest (rest x)))]))
+\end{minted}
+
+	\subsection*{Frage 5}
+	\textit{Zu was wird folgender Ausdruck ausgewertet?}
+	\mint{racket}|(f (list #true 24 48 72 #false))|
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|(list #true 24 48 72 #false)|
+		\item \mint{racket}|(list #true 72)|
+		\item \mint{racket}|(list (list #true) (list 48 #false))|
+		\item \mint{racket}|(list #true 48 #false)|
+	\end{enumerate}
+
+	\subsection*{Frage 6}
+	\textit{Was ist die Signatur von \texttt{f}?}
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|(List-Of Number) -> (List-Of Number)|
+		\item \mint{racket}|Number -> Boolean|
+		\item \mint{racket}|[X] (List-Of X) -> (List-Of X)|
+	\end{enumerate}
+\end{mdframed}
+
+\subsection*{Frage 7}
+\textit{Was ist die Signatur der folgenden Funktion?}
+\begin{minted}{racket}
+(define (composition f g) (lambda (x) (g (f x))))
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|[X Y Z] (X -> Y) (Y -> Z) -> (X -> Z)|
+	\item \mint{racket}|[X Y Z] (Y -> Z) (X -> Y) -> (X -> Z)|
+	\item \mint{racket}|[X Y Z] (X -> Z) (Z -> Y) -> (Y -> Z)|
+\end{enumerate}
+
+\begin{mdframed}
+	\noindent\textit{Gegeben sei folgendes Programm:}
+	\begin{minted}{racket}
+(define-struct collision (left right top bottom))
+; Collision is a structure: (make-collision Boolean Boolean Boolean Boolean)
+\end{minted}
+
+	\subsection*{Frage 8}
+	\textit{Wie viele Werte umfasst der Teil des Datenuniversums, der von \texttt{collision} beschrieben wird?}
+	\begin{enumerate}[label=$\square$]
+		\item unendlich viele
+		\item 1
+		\item 4
+		\item 16
+	\end{enumerate}
+
+	\subsection*{Frage 9}
+	\textit{Was ist eine \texttt{collision}?}
+	\begin{enumerate}[label=$\square$]
+		\item rekursiver Datentyp
+		\item Summentyp
+		\item Produkttyp
+		\item Intervalltyp
+	\end{enumerate}
+
+	\subsection*{Frage 10}
+	\textit{Was ist eine gültige collision?}
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|<make-collision #t 42 #t "hello">|
+		\item \mint{racket}|<make-collision #t #f #t #f #t>|
+		\item \mint{racket}|<make-collision #t #t <make-collision #t #f>>|
+		\item \mint{racket}|<make-collision #t #t #t #f>|
+	\end{enumerate}
+
+	\subsection*{Frage 11}
+	\textit{Was beschreibt die erste Zeile des obigen Programms?}
+	\begin{minted}{racket}
+(define-struct collision (left right top bottom))
+\end{minted}
+	\begin{enumerate}[label=$\square$]
+		\item Strukturdefinition
+		\item Produkttyp
+		\item Strukturtyp
+		\item Keine der Antworten
+	\end{enumerate}
+\end{mdframed}
+
+\subsection*{Frage 12}
+\textit{Sie möchten ein Programm schreiben, das ein textbasiertes Rollenspiel implementiert. Dazu möchten Sie die Charakterklassen \enquote{Mage}, \enquote{Warrior} und \enquote{Amazon} einbeziehen. Welchen Datentyp wählen Sie dafür?}
+\begin{enumerate}[label=$\square$]
+	\item Summentyp
+	\item Produkttyp
+	\item Intervalltyp
+	\item Primitiver Datentyp
+\end{enumerate}
+
+\subsection*{Frage 13}
+\textit{Sie möchten einen Charakter in einem Computerspiel mit einem Namen, einem Level und Werten für Stärke, Intelligenz, Charisma und Geschicklichkeit in einem Programm repräsentieren. Welche Art Datentyp sollten Sie hierzu verwenden?}
+\begin{enumerate}[label=$\square$]
+	\item Summentyp
+	\item Produkttyp
+	\item Rekursiver Datentyp
+	\item Primitiver Datentyp
+\end{enumerate}
+
+\subsection*{Frage 14}
+\textit{Welches der folgenden Programme ist eine Umgebung?}
+\begin{enumerate}[label=$\square$]
+	\item \begin{minted}{racket}
+(define (f x) (+ x 1))
+(define y (f 2))
+\end{minted}
+	\item \begin{minted}{racket}
+(define (f x) (+ x 1))
+(define y x)
+\end{minted}
+	\item \begin{minted}{racket}
+(define (f x) (+ x 1))
+(define y 3)
+\end{minted}
+	\item \begin{minted}{racket}
+(define (f x) (+ x 1))
+(define y (+ 2 1))
+\end{minted}
+\end{enumerate}
+
+\subsection*{Frage 15}
+\textit{Zu was wird folgender Ausdruck ausgewertet?}
+\begin{minted}{racket}
+(+ 1 "1")
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item Fehler
+	\item \mint{racket}|11|
+	\item \mint{racket}|"11"|
+	\item \mint{racket}|2|
+\end{enumerate}
+
+\subsection*{Frage 16}
+\textit{Wann kommen die ersten Tests gemäß des Entwurfsrezepts?}
+\begin{enumerate}[label=$\square$]
+	\item Nach den Templates
+	\item Nach der Implementierung
+	\item Nach den Datenbeispielen
+	\item Nach dem Funktionskopf
+\end{enumerate}
+
+\subsection*{Frage 17}
+\textit{Was ergibt die Auswertung des folgenden Ausdrucks?}
+\begin{minted}{racket}
+(#true + 3)
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item Fehler: erwartet Zahl als erstes Argument
+	\item \texttt{\#true}
+	\item Fehler: erwartet Funktion nach öffnender Klammer
+	\item \texttt{4}
+\end{enumerate}
+
+\subsection*{Frage 18}
+\textit{Gegeben sei folgende kontextfreie Grammatik für E-Mail Adressen.}
+\begin{minted}{racket}
+<NAME>  ::= maria | elke | doris | maier | <NAME>-<NAME>
+<TLD>   ::= de | com | co.uk
+<URL>   ::= amazon | google | tuebingen | <URL>.<URL>
+<EMAIL> ::= <NAME>@<URL>.<TLD>
+\end{minted}
+\textit{Was ist \textbf{keine} korrekte E-Mail Adresse im Sinne der gegebenen Grammatik?}
+\begin{enumerate}[label=$\square$]
+	\item elke@tuebingen.amazon.de
+	\item maria-maier@google.com
+	\item maier@google-tuebingen.com
+	\item doris-maria@google.co.uk
+\end{enumerate}
+
+\begin{mdframed}
+	\noindent\textit{Gegeben sei folgendes Programm:}
+	\begin{minted}{racket}
+(define (myfun x)
+  (cond
+    [(> 0 x) (+ x 1)]
+    [else #false]))
+\end{minted}
+
+	\subsection*{Frage 19}
+	\textit{Was ist die Signatur von myfun?}
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|Boolean -> Number|
+		\item \mint{racket}|MaybeNumber -> Number|
+		\item \mint{racket}|Number -> MaybeNumber|
+		\item \mint{racket}|Number -> Boolean|
+	\end{enumerate}
+
+	\subsection*{Frage 20}
+	\textit{Zu was wird folgender Ausdruck ausgewertet?}
+	\mint{racket}|(myfun (myfun 2))|
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|#false|
+		\item \mint{racket}|2|
+		\item \mint{racket}|4|
+		\item Fehler
+	\end{enumerate}
+\end{mdframed}
+
+\subsection*{Frage 21}
+\textit{Die aus der Vorlesung bekannte Funktion \texttt{unfold} hat folgende Signatur. Was macht die Funktion im dritten Argument?}
+\mint{racket}|[X Y] (Y -> Boolean) (Y -> Y) (Y -> X) Y -> (List-of X)|
+\begin{enumerate}[label=$\square$]
+	\item Sie erzeugt das nächste Listenelement.
+	\item Sie erzeugt mit dem aktuellen Zustand ein neues Listenelement.
+	\item Sie kann die Iteration terminieren.
+	\item Sie gibt an, ob die Liste beendet ist.
+\end{enumerate}
+
+\subsection*{Frage 22}
+\textit{Was ergibt die Auswertung des folgenden Programms?}
+\begin{minted}{racket}
+(local [(define x 1)]
+  (local [(define x 2)]
+    3))
+(+ x x)
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item 2
+	\item 4
+	\item Fehler
+	\item 3
+\end{enumerate}
+
+\subsection*{Frage 23}
+\textit{Was ist syntaktischer Zucker?}
+\begin{enumerate}[label=$\square$]
+	\item Konzepte einer Sprache, die für die Programmausführung unwesentlich sind.
+	\item Konzepte einer Sprache, die nicht direkt einem Prozessorbefehl entsprechen.
+	\item Konzepte einer Sprache, die durch andere Konzepte ausgedrückt werden können.
+	\item Konzepte einer Sprache, die von einem Editor zusätzlich zum Programm angezeigt werden müssen.
+\end{enumerate}
+
+\begin{mdframed}
+	\noindent\textit{Gegeben sei folgendes Programm:}
+	\begin{minted}{racket}
+(define (my-animate f)
+  (big-bang 0
+    [to-draw f]
+    [on-tick ...]))
+\end{minted}
+
+	\subsection*{Frage 24}
+	\textit{Was ist die Signatur von \texttt{my-animate}?}
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|Number -> Number|
+		\item \mint{racket}|(Image -> Number) -> Image|
+		\item \mint{racket}|Image -> Number|
+		\item \mint{racket}|(Number -> Image) -> Number|
+	\end{enumerate}
+
+	\subsection*{Frage 25}
+	\textit{Wie muss ... gefüllt werden, damit \texttt{my-animate} der Funktionsweise von \texttt{animate} entspricht?}
+	\begin{enumerate}[label=$\square$]
+		\item \mint{racket}|(lambda (x) (make-state (+ (state-tick x) 1)))|
+		\item \mint{racket}|(lambda (x) (x))|
+		\item \mint{racket}|(lambda (x) (+ x 1))|
+		\item \mint{racket}|(lambda (x y) (* x y))|
+	\end{enumerate}
+\end{mdframed}
+
+\subsection*{Frage 26}
+\textit{Wie kann das folgende Programm vereinfacht werden?}
+\begin{minted}{racket}
+(and b1 (or (not b2) (not #t)))
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(not (and b1 b2))|
+	\item \mint{racket}|(and b1 (not b2))|
+	\item \mint{racket}|(or b1 b2)|
+	\item \mint{racket}|(and b1 b2)|
+\end{enumerate}
+
+\subsection*{Frage 27}
+\textit{Welche Funktion ist eine Funktion erster Ordnung?}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(lambda (x) (lambda (y) y))|
+	\item \mint{racket}|(lambda (x) (lambda (y) (x y)))|
+	\item \mint{racket}|(lambda (x) ((lambda (y) y) x))|
+\end{enumerate}
+
+\subsection*{Frage 28}
+\textit{Das DRY-Prinzip besagt, dass ...}
+\begin{enumerate}[label=$\square$]
+	\item Rekursion, Schleifen und ähnliche Wiederholungen vermieden werden sollten.
+	\item die Tastatur beim Programmieren trocken bleiben muss.
+	\item unnötige Redundanz weitestgehend durch Abstraktion vermieden werden sollte.
+	\item Wiederholungen im Programm ein Programm verlangsamen können.
+\end{enumerate}
+
+\subsection*{Frage 29}
+\textit{Was sind magic numbers?}
+\begin{enumerate}[label=$\square$]
+	\item Ausdrücke, die zu einer Zahl ausgewertet werden.
+	\item Zahlen, die im Pogrammtext mehrmals auftreten.
+	\item Zahlen wie \texttt{42}, die eine besondere Bedeutung in der Science-Fiction besitzen.
+	\item Zahlenliterale, deren Bedeutung nicht offensichtlich ist.
+\end{enumerate}
+
+\subsection*{Frage 30}
+\textit{Was ergibt die Auswertung des folgenden Programms?}
+\begin{minted}{racket}
+(define X (+ 1 Y))
+(define Y 6)
+(* X Y)
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item 42
+	\item Fehler: Y wurde vor dessen Definition benutzt.
+	\item 6
+	\item 7
+\end{enumerate}
+
+\subsection*{Frage 31}
+\textit{Was ist korrekt bei generativ rekursiven Funktionen?}
+\begin{enumerate}[label=$\square$]
+	\item Es existiert entweder ein oder kein rekursiver Aufruf.
+	\item Der Algorithmus terminiert nie.
+	\item Man muss kreativer als bei struktureller Rekursion sein.
+	\item Der Algorithmus terminiert auf eine einfache Art und Weise.
+\end{enumerate}
+
+\subsection*{Frage 32}
+\textit{Was ist ein Wert der BSL?}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(and #true 3)|
+	\item \mint{racket}|(define (f x) (+ 3 x))|
+	\item \mint{racket}|#false|
+	\item \mint{racket}|(+ 1 3)|
+\end{enumerate}
+
+\subsection*{Frage 33}
+\textit{Laut der BSL gilt:} \textbf{(war noch bisschen mehr und anders..)}
+\begin{minted}{racket}
+<e> := (<name> <e>*)
+      | (cond {[<e> <e>]}+)
+      | <name>
+\end{minted}
+\textit{Was ist laut dieser Grammatik ein gültiger Ausdruck?}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(cond [(< 5 3)] [else #false])|
+	\item \mint{racket}|(cond [] [(< 4 2) #true])|
+\end{enumerate}
+
+\subsection*{Frage 34}
+\textit{Wenn \texttt{e1} zu \texttt{e2} reduziert werden kann, dann sagt KONG, dass ...}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(cond e1 ...) = (cond e2 ...)|
+	\item ...
+\end{enumerate}
+
+\subsection*{Frage 35}
+\textit{Was wird in ISL bei folgender Funktion der Umgebung hinzugefügt?}
+\begin{minted}{racket}
+(define f (lambda (x) (+ 2 1)))
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|(define f 3)|
+	\item \mint{racket}|(define f (lambda (x) (+ 2 1))|
+	\item \mint{racket}|(define f (lambda (x) 3))|
+	\item \mint{racket}|(define (f x) 3)|
+\end{enumerate}
+
+\subsection*{Frage 36}
+\textit{Was ist die Signatur folgender Funktion?}
+\begin{minted}{racket}
+(define (fun f xs) (foldr append empty (map f xs)))
+\end{minted}
+\begin{enumerate}[label=$\square$]
+	\item \mint{racket}|[X Y] (X -> Y) (List-Of Y) -> (List-Of X)|
+	\item \mint{racket}|[X] (Number -> X) (List-Of Number) -> (List-Of X)|
+	\item \mint{racket}|[X Y] (X -> Y) (List-Of X) -> (List-Of Y)|
+\end{enumerate}
+
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+
+\begin{center}
+	Der Rest ist mir/uns leider entfallen.\\
+	Grundsätzlich war die Klausur sehr ähnlich zu vorigen Klausuren.\\
+	GeTeXt von Marvin Borner.
+\end{center}
+
+\end{document}

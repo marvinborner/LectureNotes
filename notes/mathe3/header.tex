@@ -1,0 +1,77 @@
+\usepackage{braket}
+\usepackage{polynom}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{svg}
+\usepackage{environ}
+\usepackage{mathtools}
+\usepackage{tikz,pgfplots}
+\usepackage{titleps}
+\usepackage[breakable]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[X2,T1]{fontenc}
+\usepackage[ddmmyyyy,hhmmss]{datetime}
+
+\pgfplotsset{width=10cm,compat=1.15}
+\usepgfplotslibrary{external}
+\usetikzlibrary{calc,trees,positioning,arrows,fit,shapes}
+%\tikzexternalize
+\setcounter{MaxMatrixCols}{20}
+\graphicspath{{assets}}
+
+\newpagestyle{main}{\sethead{\toptitlemarks\thesection\quad\sectiontitle}{}{\thepage}\setheadrule{.4pt}}
+\pagestyle{main}
+
+\newtcolorbox{proof-box}{title=Beweis,colback=green!5!white,arc=0pt,outer arc=0pt,colframe=green!60!black,breakable}
+\newtcolorbox{bsp-box}{title=Beispiel,colback=orange!5!white,arc=0pt,outer arc=0pt,colframe=orange!60!black,breakable}
+\newtcolorbox{visu-box}{title=Visualisation,colback=cyan!5!white,arc=0pt,outer arc=0pt,colframe=cyan!60!black,breakable}
+\newtcolorbox{bem-box}{title=Bemerkung,colback=gray!5!white,arc=0pt,outer arc=0pt,colframe=gray!60!black,breakable}
+
+\newcommand\toprove{\textbf{Zu zeigen: }}
+
+\newcommand\N{\mathbb{N}}
+\newcommand\R{\mathbb{R}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\renewcommand\C{\mathbb{C}}
+\renewcommand\P{\mathbb{P}}
+\newcommand\M{\mathcal{M}}
+\renewcommand\O{\mathcal{O}}
+\newcommand\pot{\mathcal{P}}
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+\newcommand{\bigcupdot}{\dot{\bigcup}}
+
+% WTF
+\DeclareTextSymbolDefault{\CYRABHDZE}{X2}
+\newcommand{\Ezh}{\CYRABHDZE}
+\newcommand\yogh{\text\Ezh}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\ggT}{ggT}
+\DeclareMathOperator{\kgV}{kgV}
+\DeclareMathOperator{\grad}{grad}
+
+\newlist{abc}{enumerate}{10}
+\setlist[abc]{label=(\alph*)}
+
+\newlist{num}{enumerate}{10}
+\setlist[num]{label=\arabic*.}
+
+\newlist{rom}{enumerate}{10}
+\setlist[rom]{label=(\roman*)}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+\def\qedsymbol{\sc q.e.d.} % hmm?
+\def\wtf{\renewcommand*{\qedsymbol}{\sc w.t.f.}\qed} % hmm?
+
+\lstset{
+	basicstyle=\ttfamily,
+	mathescape
+}
+
+% TODO: parenthesis
+\newcommand\pdiv[1]{\text{\quad(div #1)}}
