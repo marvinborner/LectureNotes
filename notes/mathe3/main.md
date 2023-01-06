@@ -219,11 +219,11 @@ Ausgabe: y (=ggT(a,b))
 ::: bsp
 EA mit $a=48$ und $b=-30$:
 
-  x     y       r
+    x      y     r
   ----- ------- ----
-  48    -30     18
-  -30   18      6
-  18    **6**   0
+   48     -30    18
+   -30    18     6
+   18    **6**   0
 
 Damit ist der größte gemeinsame Teiler mit 6 gefunden.
 :::
@@ -238,7 +238,7 @@ $a,b\in\Z$, nicht beide $=0 \implies \exists s,t\in\Z:\ggT(a,b)=sa+tb$
 \begin{align*}
 b = 0:\quad&\ggT(a,b) = |a| = sa+0b,\quad s=\mathrm{sgn}(a)\\
 b\ne0,\ b\mid a:\quad&\ggT(a,b)=|b|=0a+tb,\quad t=\mathrm{sgn}(b)\\
-b\ne0,\ b\nmid a:\quad&a_0:=a,a_1:=b\implies\mathrm{EA}\implies\ggT(a,b)=a_n,\quad n\ge2\\
+b\ne0,\ b\nmid a:\quad&a_0\defeq a,a_1\defeq b\implies\mathrm{EA}\implies\ggT(a,b)=a_n,\quad n\ge2\\
 &\text{Zeige mit vollst. Induktion: }\exists s_j,t_j\in\Z: a_j=s_ja_0+t_ja_1\quad\forall j=0,..,n
 \end{align*}
 \end{proof}
@@ -337,7 +337,7 @@ $a,b\in\Z$, nicht beide $=0,\ c\in\Z$
 \begin{proof}
 In beide Richtungen:
 \begin{itemize}
-    \item \enquote{$\implies$}:\quad Gelte $sa+tb=1$. Annahme: $\ggT(a,b)>1$\\$d:=\ggT(a,b)\implies d\mid a,\quad d\mid b$ $\implies \exists k_1,k_2\in\Z:a=k_1d,\ b=k_2d$ $\implies sa+tb=d(sk_1+tk_2)\ne1$, da $d>1\ \lightning$, also $d=1$
+    \item \enquote{$\implies$}:\quad Gelte $sa+tb=1$. Annahme: $\ggT(a,b)>1$\\$d\defeq\ggT(a,b)\implies d\mid a,\quad d\mid b$ $\implies \exists k_1,k_2\in\Z:a=k_1d,\ b=k_2d$ $\implies sa+tb=d(sk_1+tk_2)\ne1$, da $d>1\ \lightning$, also $d=1$
     \item \enquote{$\impliedby$}:\quad $\exists s,t\in\Z: 1=sa+tb\implies c=sac+tbc$, also $a\mid a$ und $a\mid bc$ $\implies a\mid(\underbrace{sac+tbc}_{=c})$
 \end{itemize}
 \end{proof}
@@ -467,11 +467,11 @@ $$x\equiv\begin{cases}a_1\pmod{m_1}\\\vdots\\a_n\pmod{m_n}\end{cases}$$
 ::: proof
 ```{=tex}
 \begin{proof}
-Setze $M_i:=\frac{M}{m_i}\in\Z\implies\ggT(m_i,M_i)=1\quad\forall i=1,...,n$
+Setze $M_i\defeq\frac{M}{m_i}\in\Z\implies\ggT(m_i,M_i)=1\quad\forall i=1,...,n$
 
 $\implies \exists s_i,t_i\in\Z: s_i\cdot m_i + t_iM_i = 1$
 
-Setze $e_i:=t_iM_i\implies e_i\equiv\begin{cases}0\pmod{m_j}&j\ne i\\1\pmod{m_i}\end{cases}$
+Setze $e_i\defeq t_iM_i\implies e_i\equiv\begin{cases}0\pmod{m_j}&j\ne i\\1\pmod{m_i}\end{cases}$
 
 $\implies x = \left(\sum_{i=1}^n a_ie_i\right)\pmod{M}$ Lösung, da:
 
@@ -728,13 +728,14 @@ $(\Z_n,\oplus,\odot)$ Körper $\iff n\in\P$. Analog in $K[x]$: Sei
 $f\in K[x],\ \grad(f)=n$. Dann ist $(K[x]_n,+,\odot_f)$ mit
 
 -   $K[x]_n=\{g\in K[x]\mid\grad(g)<n\}$
--   $g\odot_f h := g\cdot h\pmod{f}$
+-   $g\odot_f h \defeq g\cdot h\pmod{f}$
 
 ein kommutativer Ring mit Eins.
 
 Invertierbare Elemente bezüglich $\odot_f$:
-$K[x]_n^*:=\{g\in K[x]_n\mid\ggT(g,f)=1\}$ (Beweis wie für $\Z_n^*$). Es
-folgt $\exists s,t\in K[x]: sg+tf=1\implies s\cdot g\equiv1\pmod{f}$ und
+$K[x]_n^*\defeq\{g\in K[x]_n\mid\ggT(g,f)=1\}$ (Beweis wie für
+$\Z_n^*$). Es folgt
+$\exists s,t\in K[x]: sg+tf=1\implies s\cdot g\equiv1\pmod{f}$ und
 $g^{-1}\equiv s\pmod{f}$. Damit erhält man $(K[x]_n,+,\odot_f)$ Körper
 $\iff f$ irreduzibel.
 
@@ -872,15 +873,15 @@ Die Rechenregeln für Folgen in $\R$ gelten analog im $\R^n$.
     $K_\varepsilon(x_0)=\{x\in\R^n\mid\|x-x_0\|<\varepsilon\}$ heißt
     offene $\varepsilon$-Kugel um $x_0$
 -   $U\subseteq\R^n$ offen
-    $:\iff\forall x\in U\exists\varepsilon>0:K_\varepsilon(x)\subseteq U$
--   $U$ heißt Umgebung von $x\in D\subseteq\R^n:\iff U$ offen und
+    $\defiff\forall x\in U\exists\varepsilon>0:K_\varepsilon(x)\subseteq U$
+-   $U$ heißt Umgebung von $x\in D\subseteq\R^n\defiff U$ offen und
     $x\in U$ und $U\subseteq D$
--   $A\subseteq\R^n$ abgeschlossen $:\iff A^C=\R^n\setminus A$ offen
+-   $A\subseteq\R^n$ abgeschlossen $\defiff A^C=\R^n\setminus A$ offen
 
 ## Rand
 
 $x\in\R^n$ Randpunkt von
-$D\subseteq\R^n:\iff K_\varepsilon(x)\cap D\ne\emptyset$ und
+$D\subseteq\R^n\defiff K_\varepsilon(x)\cap D\ne\emptyset$ und
 $K_\varepsilon(x)\cap D^C\ne\emptyset\quad\forall\varepsilon>0$.
 
 $\partial D$ ist die Menge aller Randpunkte von $D$.
@@ -940,7 +941,7 @@ Sei $\{U_i\}_{i\in\N}$ ein System offener Mengen. Dann:
     \item Sei $x\in\bigcup_{i=1}^\infty U_i$
     \begin{align*}&\implies\exists i\in\N:x\in U_i\\&\implies\exists\varepsilon>0:K_\varepsilon(x)\subseteq U_i\text{, da $U_i$ offen}\\&\implies K_\varepsilon(x)\subseteq\bigcup_{i=1}^\infty U_i\\&\implies\bigcup_{i=1}^\infty U_i\text{ offen}\end{align*}
     \item $x\in U_1\cap U_2$
-    \begin{align*}&\implies\exists\varepsilon_1,\varepsilon_2>0:K_{\varepsilon_1}(x)\subseteq U_1,\ K_{\varepsilon_2}(x)\subseteq U_2\\&\varepsilon:=\min\{\varepsilon_1,\varepsilon_2\}\\&\implies K_\varepsilon(x)\subseteq K_{\varepsilon_1}(x)\subseteq U_1\land K_\varepsilon(x)\subseteq K_{\varepsilon_2}(x)\subseteq U_2\\&\implies K_\varepsilon(x)\subseteq U_1\cap U_2\end{align*}
+    \begin{align*}&\implies\exists\varepsilon_1,\varepsilon_2>0:K_{\varepsilon_1}(x)\subseteq U_1,\ K_{\varepsilon_2}(x)\subseteq U_2\\&\varepsilon\defeq\min\{\varepsilon_1,\varepsilon_2\}\\&\implies K_\varepsilon(x)\subseteq K_{\varepsilon_1}(x)\subseteq U_1\land K_\varepsilon(x)\subseteq K_{\varepsilon_2}(x)\subseteq U_2\\&\implies K_\varepsilon(x)\subseteq U_1\cap U_2\end{align*}
 \end{abc}
 \end{proof}
 ```
@@ -969,10 +970,10 @@ Sei $\{A_i\}_{i=1}^\infty$ ein System abgeschlossener Mengen. Dann:
 
 Sei $D\subseteq\R^n$.
 
--   $\bar{D}=D\cup\partial D$ ist abgeschlossen und heißt Abschluss von
-    $D$.
--   $\mathring{D}:=D\setminus\partial D$ ist offen und heißt Inneres von
-    $D$.
+-   $\bar{D}\defeq D\cup\partial D$ ist abgeschlossen und heißt
+    Abschluss von $D$.
+-   $\mathring{D}\defeq D\setminus\partial D$ ist offen und heißt
+    Inneres von $D$.
 -   $\partial D$ ist abgeschlossen
 
 ::: proof
@@ -999,8 +1000,8 @@ Sei $D\subseteq\R^n$.
 ## Beschränkte/kompakte Mengen
 
 -   $D\subseteq\R^n$ beschränkt
-    $:\iff\exists K>0:\|x\|<K\quad\forall x\in D$
--   $D\subseteq\R^n$ kompakt $:\iff$ Jede Folge in $D$ besitzt eine in
+    $\defiff\exists K>0:\|x\|<K\quad\forall x\in D$
+-   $D\subseteq\R^n$ kompakt $\defiff$ Jede Folge in $D$ besitzt eine in
     $D$ konvergente Teilfolge.
 
 ## Charakterisierung kompakter Mengen
@@ -1031,11 +1032,11 @@ TODO.
 ::: bsp
 -   Skalare Funktionen mit $D\subseteq\R^2$ lassen sich grafisch
     darstellen:
-    -   $\mathrm{Graph}(f):=\left\{\begin{pmatrix}x\\y\\z\end{pmatrix}\in\R^3\mid\begin{pmatrix}x\\y\\z\end{pmatrix}\in D,\ z=f(x,y)\right\}$
+    -   $\mathrm{Graph}(f)\defeq\left\{\begin{pmatrix}x\\y\\z\end{pmatrix}\in\R^3\mid\begin{pmatrix}x\\y\\z\end{pmatrix}\in D,\ z=f(x,y)\right\}$
         ist eine Fläche im $\R^3\\$ Beispiel: $f(x,y)=5-2xy+x^3+y^2\\$
         `\begin{tikzpicture}\begin{axis}[xlabel={$y$},ylabel={$x$},zlabel={$z$}]\addplot3[surf, mesh, samples=30]{5-2*x*y+x^3+y^2};\end{axis}\end{tikzpicture}`{=tex}
     -   Höhen-/Niveaulinien:
-        $N_C(f):=\left\{\begin{pmatrix}x\\y\end{pmatrix}\in\R^2\mid f(x,y)=c\right\},\quad c\in\R.\\$
+        $N_C(f)\defeq\left\{\begin{pmatrix}x\\y\end{pmatrix}\in\R^2\mid f(x,y)=c\right\},\quad c\in\R.\\$
         Beispiel: $f:\R^2\to\R,\ f(x,y)=x^2+y^2\\$
         `\begin{tikzpicture}\begin{axis}[xlabel={$y$},ylabel={$x$},zlabel={$z$}]\addplot3[surf, mesh, samples=30]{x^2+y^2};\end{axis}\end{tikzpicture}\\`{=tex}
         `TODO%\begin{tikzpicture}\begin{axis}[view={0}{90},enlarge x limits,xlabel={$y$},ylabel={$x$},zlabel={$z$}]\addplot3[domain=-3:3,domain y=-3:3,contour gnuplot={levels={-1,1}},samples=30]{x^2+y^2};\end{axis}\end{tikzpicture}\\`{=tex}
@@ -1062,8 +1063,8 @@ Sei $f:D\subset\R^n\to\R^m$.
 -   $c\in\R^m$ heißt Grenzwert von $f$ in $a\in\R^n$, falls für jede
     Folge $(x_k)$ mit $x_k\to a,\ x_k\ne a\quad\forall k\in\N$ gilt:
     $f(x_k)\to c$. Schreibweise: $\lim_{x\to a}f(x)=c$
--   $f$ stetig in $a\in D :\iff \lim_{x\to a}f(x)=f(a)$
--   $f$ stetig auf $D :\iff f$ stetig in $a\quad\forall a\in D$
+-   $f$ stetig in $a\in D \defiff \lim_{x\to a}f(x)=f(a)$
+-   $f$ stetig auf $D \defiff f$ stetig in $a\quad\forall a\in D$
 
 ::: bem
 -   $f:D\subset\R^n\to\R^m$ stetig in
@@ -1092,7 +1093,7 @@ Sei $f:D\subset\R^n\to\R^m$.
     (TODO: Graph)
     $$f(x,y)=\begin{cases}0&(x,y)=(0,0)\\\frac{3x^2}{x^2+y^2}&\text{ sonst}\end{cases}$$
     -   Sei
-        $a_k:=\begin{pmatrix}1/k\\1/k\end{pmatrix}\in\R^2\setminus\left\{\begin{pmatrix}0\\0\end{pmatrix}\right\}$.
+        $a_k\defeq\begin{pmatrix}1/k\\1/k\end{pmatrix}\in\R^2\setminus\left\{\begin{pmatrix}0\\0\end{pmatrix}\right\}$.
         Es gilt
         `\begin{align*}&a_k\to0\\\implies&f(a_k)=\frac{3(1/k)^2}{(1/k)^2+(1/k)^2}=\frac{3}{2}\\\implies&f(a_k)\to\frac{3}{2}\end{align*}`{=tex}
     -   $f(0,0)=0\implies f(a_k)\not\to f(0,0)$ und $f$ unstetig in
@@ -1157,7 +1158,7 @@ $\implies f(x_{k_j})=y_{k_j}$ Teilfolge von $(y_k)$ in $f(A)$ mit Grenzwert $f(a
 
 ## Beschränktheit von Funktionen
 
-Sei $D=\emptyset$, $f:D\subseteq\R^n\to\R^m$ beschränkt $:\iff f(D)$
+Sei $D=\emptyset$, $f:D\subseteq\R^n\to\R^m$ beschränkt $\defiff f(D)$
 beschränkt.
 
 ## Minimax-Theorem von Weierstraß
@@ -1190,8 +1191,8 @@ $\implies f$ hat Maximum und Minimum auf $S$
 
 ## Kontraktion
 
-Sei $A\subseteq\R^n$ abgeschlossen und sei $f:A\to\R^n$. \$fA heißt
-Kontraktion auf $A :\iff$
+Sei $A\subseteq\R^n$ abgeschlossen und sei $f:A\to\R^n$. $f$ heißt
+Kontraktion auf $A\defiff$
 
 -   $f(A)\subseteq A$
 -   $\|f(x)-f(y)\|\le q\|x-y\|,\ q\in[0,1)\quad\forall x,y\in A$
@@ -1214,7 +1215,7 @@ $A$. Dann:
 
 1.  $\exists!\bar{x}\in A: A(\bar{x})=\bar{x}$. $\bar{x}$ heißt
     Fixpunkt.
-2.  Für $x_0\in A$ und $x_n:=f(x_{x_n-1}),\ n\in\N$, gilt:
+2.  Für $x_0\in A$ und $x_n\defeq f(x_{x_n-1}),\ n\in\N$, gilt:
     $x_n\to\bar{x}$ und $\|x_n-\bar{x}\|\le\frac{qn}{1-q}\|x_1-x_0\|$
 
 ::: proof
@@ -1239,18 +1240,18 @@ Sei $D\subseteq\R^n$ offen, $f:D\to\R^m$, $f(x)=(f_1(x),...,f_m(x))$ und
 $a=(a_1,...,a_n)^\top\in D$.
 
 -   $f$ heißt an der Stelle $a$ partiell nach $x_j$ differenzierbar,
-    falls für jede der Funktion $f_i: \R^n\to\R$ gilt: Die skalare
+    falls für jede der Funktionen $f_i: \R^n\to\R$ gilt: Die skalare
     Funktion $f_i(a_1,...,a_{j-1},x_j,a_{j+1},...,a_n)$ einer
     Veränderlichen ist an der Stelle $a_j$ differenzierbar, d.h.
     `\begin{align*}&\lim_{k\to0}\frac{f_i(a_1,...,a_{j-1},a_j+h,a_{j+1},...,a_n)-f_i(a_1,...,a_n)}{h}\\=&\lim_{h\to0}\frac{f_i(a+h\cdot e_j)-f(a)}{h}\end{align*}`{=tex}
     existiert für alle $1\le i\le m$.
 -   Dieser Grenzwert heißt dann partielle Ableitung von $f_i$ nach $x_j$
-    an der Stelle $a$. Sschreibweise:
+    an der Stelle $a$. Schreibweise:
     $\frac{\partial f_i}{\partial x_j}(a)$.
 -   Sind alle $f_i$ nach allen $x_j$ partiell differenzierbar in $a$, so
     heißt $f$ partiell differenzierbar und man definiert die
     Jacobimatrix von $f$ in $a$ durch
-    $$f'(a):=\begin{pmatrix}\frac{\partial f_1}{\partial x_1}(a)&...&\frac{\partial f_1}{\partial x_n}(a)\\\frac{\partial f_m}{\partial x_1}(a)&...&\frac{\partial f_m}{\partial x_n}(a)\\\end{pmatrix}\in\M_{m,n}(\R)$$
+    $$f'(a)\defeq\begin{pmatrix}\frac{\partial f_1}{\partial x_1}(a)&...&\frac{\partial f_1}{\partial x_n}(a)\\\frac{\partial f_m}{\partial x_1}(a)&...&\frac{\partial f_m}{\partial x_n}(a)\\\end{pmatrix}\in\M_{m,n}(\R)$$
 -   Für skalare Funktionen besteht $f'(a)$ aus nur einer Zeile. Man
     bezeichnet den Vektor
     $$f'(a)^\top=\begin{pmatrix}\frac{\partial f}{\partial x_1}(a)\\\vdots\\\frac{\partial f}{\partial x_n}(a)\end{pmatrix}=:\nabla f(a)=\grad(f(a))\in\R^n$$
@@ -1372,7 +1373,7 @@ $$(g\circ f)'(a)=g'(f(a))\cdot f'(a)$$
 ::: proof
 ```{=tex}
 \begin{proof}
-Es seien $L:=f'(a)$, $K:=g'(f(a))$.
+Es seien $L\defeq f'(a)$, $K\defeq g'(f(a))$.
 
 D.h.: $K\cdot L=g'(f(a))\cdot f'(a)$.
 
@@ -1433,18 +1434,18 @@ $g'(x,y)=\begin{pmatrix}2x&0\\0&1\end{pmatrix}$
 ### Mittelwertsatz für skalare Funktionen
 
 Sei $D\subseteq\R^n$ offen, $f:D\to\R$ differenzierbar und $a,b\in D$,
-sodass $$S(a,b):=\{a+t(b-a)\mid t\in(0,1)\}\subseteq D$$ Dann existiert
-ein $\xi\in S(a,b)$, sodass $$f(b)-f(a)=f'(\xi)(b-a)$$
+sodass $$S(a,b)\defeq\{a+t(b-a)\mid t\in(0,1)\}\subseteq D$$ Dann
+existiert ein $\xi\in S(a,b)$, sodass $$f(b)-f(a)=f'(\xi)(b-a)$$
 
 ::: proof
 ```{=tex}
 \begin{proof}
-Sei $\varphi:[0,1]\to D$ mit $\varphi(t)=a+t(b-a)$, $g:=f\circ\varphi:[0,1]\to\R$. $f$ differenzierbar, $\varphi$ differenzierbar auf $(0,1)$ und stetig auf $[0,1]$.
+Sei $\varphi:[0,1]\to D$ mit $\varphi(t)=a+t(b-a)$, $g\defeq f\circ\varphi:[0,1]\to\R$. $f$ differenzierbar, $\varphi$ differenzierbar auf $(0,1)$ und stetig auf $[0,1]$.
 
 $\implies g$ differenzierbar auf $(0,1)$ und stetig auf $[0,1]$
 $\implies \exists\vartheta\in(0,1)$ mit $\frac{g(1)-g(0)}{1-0}=g'(\vartheta)$.
 
-Sei $\xi:=\phi(\vartheta)$.
+Sei $\xi\defeq\phi(\vartheta)$.
 \begin{align*}
 \implies f(b)-f(a)&=f(\varphi(1))-f(\varphi(0))=g(1)-g(0)\\
 &=g'(\vartheta)=(f\circ\varphi)'(\vartheta)\\
@@ -1478,23 +1479,23 @@ Es lässt sich jedoch eine Abschätzung mithilfe von Integralen zeigen.
 
 Sei $[a,b]\subseteq\R$.
 
--   $Z:=\{x_0,x_1,...,x_n\}\subseteq[a,b]$, $a=x_0<x_1<...<x_n=b$ heißt
-    Zerlegung von $[a,b]$
--   $|Z|:=\max_{i=1,...,n}(x_i-x_{i-1})$ heißt Feinheit von $Z$
+-   $Z\defeq\{x_0,x_1,...,x_n\}\subseteq[a,b]$, $a=x_0<x_1<...<x_n=b$
+    heißt Zerlegung von $[a,b]$
+-   $|Z|\defeq\max_{i=1,...,n}(x_i-x_{i-1})$ heißt Feinheit von $Z$
 -   $\sum[a,b]$: Menge aller Zerlegungen von $\yogh[a,b]$
 
 ### Riemannsche Summe
 
 Sei $f:[a,b]\to\R$ und $Z=\{x_0,...,x_n\}\in\yogh[a,b]$.
 
--   $\xi:=(\xi_1,...,\xi_n)$, $\xi_i\in[x_{i-1},x_i]$, heißt
+-   $\xi\defeq (\xi_1,...,\xi_n)$, $\xi_i\in[x_{i-1},x_i]$, heißt
     Zwischenvektor von $Z$
--   $S(f,Z,\xi):=\sum_{i=1}^nf(\xi_i)(x_i-x_{i-1})$ heißt Riemannsche
-    Summe
+-   $S(f,Z,\xi)\defeq\sum_{i=1}^nf(\xi_i)(x_i-x_{i-1})$ heißt
+    Riemannsche Summe
 
 ### Riemann-Integral
 
-$f:[a,b]\to\R$ heißt $R$-integrierbar auf $[a,b] :\iff$ für jede Folge
+$f:[a,b]\to\R$ heißt $R$-integrierbar auf $[a,b] \defiff$ für jede Folge
 $Z_n\in\yogh[a,b]$ mit Zwischenvektor $\xi_n$ und
 $|Z_n|\xrightarrow[n\to\infty]{}0$ konvergiert $S(f,Z_n,\xi_n)$ gegen
 $A\in\R$.
@@ -1510,7 +1511,7 @@ Die Definition ist äquivalent zu derjenigen aus Mathe 1.
 Sei $f:[a,b]\to\R^m$.
 
 -   Für $Z$, $\xi$ wie zuvor ist
-    $S(f,Z,\xi):=\sum_{i=1}^nf(\xi_i)(x_i-x_{i-1})$
+    $S(f,Z,\xi)\defeq\sum_{i=1}^nf(\xi_i)(x_i-x_{i-1})$
 -   Für $Z_n$, $\xi_n$ sei $A\in\R^m$ der Grenzwert von
     $S(f,Z_n,\xi_n)$, falls existent.$\\$Bezeichnung:
     $A=\int_a^bf(x)\mathrm dx$
@@ -1522,7 +1523,7 @@ Sei $f:[a,b]\to\R^m$.
 -   Eine Matrix $A(x)\in\M_{m,n}(\R)$ kann man mit einem Vektor
     $v(x)\in\R^m\cdot n$ identifizieren, indem alle Matrixeingänge in
     eine Spalte geschrieben werden. Daher kann man
-    definieren:$\\$$\int_a^bA(x)\mathrm dx:=\left(\int_a^ba_{ij}(x)\mathrm dx\right)_{i,j}$
+    definieren:$\\$$\int_a^bA(x)\mathrm dx\defeq\left(\int_a^ba_{ij}(x)\mathrm dx\right)_{i,j}$
     und es gilt
     $$\int_a^bA(x)\cdot h\mathrm dx=\int_a^bA(x)\mathrm dx\cdot h\quad\forall h\in\R^n$$
 :::
@@ -1550,17 +1551,17 @@ partiellen Ableitungen stetig sind (d.h. $f$ stetig differenzierbar).
 Ferner seien $a,b\in D$, sodass
 $$S=\{a+t(b-a)\mid t\in[0,1]\}\subseteq D.$$
 
-Für $h:=b-a$ folgt:
+Für $h\defeq b-a$ folgt:
 
 -   $f(b)-f(a)=\underbrace{\int_0^1f'(a+th)\mathrm dt}_{\in\M_{m,n}(\R)}\cdot h\in\R^m$
 -   $\|f(b)-f(a)\|\le M\cdot\|h\|$, wobei
-    $M:=\max_{x\in S}\underbrace{\|f'(x)\|}_{\mathclap{\text{stetig, da alle partiellen Ableitungen stetig}}}$
+    $M\defeq\max_{x\in S}\underbrace{\|f'(x)\|}_{\mathclap{\text{stetig, da alle partiellen Ableitungen stetig}}}$
 
 ::: proof
 ```{=tex}
 \begin{proof}
 \begin{itemize}
-\item $\varphi_j: [0,1]\to\R$, $\varphi_j(t):=f_j(a+t\cdot h)$, $h=b-a$.
+\item $\varphi_j: [0,1]\to\R$, $\varphi_j(t)\defeq f_j(a+t\cdot h)$, $h=b-a$.
 \begin{align*}
 \implies f_j(b)-f_j(a)&=\varphi_j(1)-\varphi_j(0)\\
 &=\int_0^1\varphi_j'(t)\mathrm dt\\
@@ -1596,7 +1597,7 @@ TODO.
 ::: bem
 -   Partielle Differenzierbarkeit gilt auch für vektorwertige Funktionen
     $f:D\subseteq\R^n\to\R^m$ ($D$ offen)
--   Die Stetigkeit der paritellen Ableitung ist ein hinreichendes, aber
+-   Die Stetigkeit der partiellen Ableitung ist ein hinreichendes, aber
     kein notwendiges Kriterium für Differenzierbarkeit
 -   Alle Polynome sind differenzierbar, da die partiellen Ableitungen
     alle stetig sind
@@ -1734,12 +1735,12 @@ $\implies\exists\xi_1\in(a_1,a_1+h):\varphi(a_1+h)-\varphi(a_1)=h\cdot\varphi'(\
 
 Setze
 \begin{align*}
-F(h,k)&:=\overbrace{f(a_1+h,a_2+k)-f(a_1+h,a_2)}^{\varphi(a_1+h)}-\overbrace{f(a_1,a_2+k)+f(a_1,a_2)}^{\-\varphi(a_1)}\\
+F(h,k)&\defeq\overbrace{f(a_1+h,a_2+k)-f(a_1+h,a_2)}^{\varphi(a_1+h)}-\overbrace{f(a_1,a_2+k)+f(a_1,a_2)}^{\-\varphi(a_1)}\\
 &=h\cdot\varphi'(\xi_1)\\
 &=h\bigg[\underbrace{\frac{\partial f}{\partial x}(\xi_1,a_2+k)-\frac{\partial f}{\partial x}(\xi_1,a_2)}_{\mathclap{=\frac{\partial^2f}{\partial y\partial x}(\xi_1,\vartheta_1)\cdot k\text{ für ein }\vartheta_1\in(a_2,a_2+k)}}\bigg]\\
 &\implies F(h,k)=h\cdot k\frac{\partial^2f}{\partial y\partial x}(\xi_1,\vartheta_1)
 \end{align*}
-\item Analog erhält man für $\psi(t):=f(a_1+h,t)=f(a_1,t)$, dass $F(h,k)=\psi(a_2+k)-\psi(a_2)$ und $F(h,k)=h\cdot k\frac{\partial^2f}{\partial x\partial y}(\xi_2,\vartheta_2)$ für $\xi_2\in(a_1,a_1+h)$, $\vartheta\in(a_2,a_2+k)$.
+\item Analog erhält man für $\psi(t)\defeq f(a_1+h,t)=f(a_1,t)$, dass $F(h,k)=\psi(a_2+k)-\psi(a_2)$ und $F(h,k)=h\cdot k\frac{\partial^2f}{\partial x\partial y}(\xi_2,\vartheta_2)$ für $\xi_2\in(a_1,a_1+h)$, $\vartheta\in(a_2,a_2+k)$.
 \item Insgesamt folgt, da $h,k\ne0$: $\frac{\partial^2f}{\partial y\partial x}(\xi_1,\vartheta_1)=\frac{\partial^2f}{\partial x\partial y}(\xi_2,\vartheta_2)$
 
 $\xRightarrow{h,k\to0}\frac{\partial^2f}{\partial y\partial x}(a_1,a_2)$, da $f\in\mathcal{C}^2(D).$
@@ -1766,16 +1767,16 @@ Lagrange)
 
 ::: bem
 Die Taylorreihe
-$T(x):=\sum_{j=0}^\infty\frac{f^{(j)}(x_0)}{j!}(x-x_0)^j$ konvergiert
-gegen $f(x)\iff\lim_{k\to\infty}R_k(x)=0$. (Vorausgesetzt $f$ ist
-unendlich oft differenzierba.r)
+$T(x)\defeq\sum_{j=0}^\infty\frac{f^{(j)}(x_0)}{j!}(x-x_0)^j$
+konvergiert gegen $f(x)\iff\lim_{k\to\infty}R_k(x)=0$. (Vorausgesetzt
+$f$ ist unendlich oft differenzierbar.)
 :::
 
 ::: bsp
 Berechne $\sin(1)$ mit Fehlerdifferenz $<10^{-3}!$.
 
 Entwickle dazu $f(x)=\sin(x)$ um $x_0=0$. Suche $k\in\N$, sodass
-$$|R_k(1)|=\frac{|f^{(k+1)}(\xi)|}{(k+1)!}|1-0|^{k+1}<\frac{1}{1000}, \xi\text{ zwischen }0\text{ und } 1.$$
+$$|R_k(1)|=\frac{|f^{(k+1)}(\xi)|}{(k+1)!}|1-0|^{k+1}<\frac{1}{1000},\quad\xi\text{ zwischen }0\text{ und } 1.$$
 
 $f(x)=\sin x$, $f'(x)=\cos x$,
 $f''(x)=-\sin x, f'''(x)=-f'(x), f^{(4)}(x)=f(x)$
@@ -1785,7 +1786,7 @@ für $n\ge0$
 
 $\implies|R_k(1)|\le\frac{1}{(k+1)!}<\frac{1}{1000}$
 
-$\iff (k+1)!>1000\iff k\ge6$
+$\iff (k+1)!>1000\iff k\ge6$`\medskip`{=tex}
 
 Für $k=6$ ist
 `\begin{align*}\sin(1)\approx T_6(1)&=\frac{\sin0}{0!}(1-0)^0+\frac{\cos0}{1!}(1-0)^1-\frac{\sin0}{2!}(1-0)^2\pm...\pm\frac{\sin0}{6!}(1-0)^6\\&=0+1+0-\frac{1}{6}+0+\frac{1}{120}+0=\frac{101}{120}\\&\approx 0.841\end{align*}`{=tex}
@@ -1793,17 +1794,17 @@ Für $k=6$ ist
 
 ### Multiindex
 
-$p:=(p_1,...,p_m)\in\N_0^m$ heißt Multiindex.
+$p\defeq (p_1,...,p_m)\in\N_0^m$ heißt Multiindex.
 
-$|p|:=p_1+...+p_m$ Ordnung von $p$.
+$|p|\defeq p_1+...+p_m$ Ordnung von $p$.
 
-$p!:=(p_1!)\cdot...\cdot(p_m!)$
+$p!\defeq (p_1!)\cdot...\cdot(p_m!)$
 
 Für $x\in\R^m$, $x=(x_1,...,x_m)^\top$ sei
-$x^P:=x_1^{P_1}\cdot...\cdot x_m^{P_m}.$
+$x^P\defeq x_1^{P_1}\cdot...\cdot x_m^{P_m}.$
 
 Ist $f$ $k$-mal stetig differenzierbar, so sei
-$\partial^Pf:=\frac{\partial^{|P|}f}{\partial x_1^{P_1}...\partial x_m^{P_m}}.$
+$\partial^Pf\defeq\frac{\partial^{|P|}f}{\partial x_1^{P_1}...\partial x_m^{P_m}}.$
 
 ::: bsp
 -   $P=(0,...,0)\implies\partial^Pf=f$
@@ -1829,7 +1830,7 @@ $a\in D$. Dann ist
 -   $T_1(x)=\underbrace{f(a)}_{|p|=0}+\underbrace{\sum_{i=1}^n\frac{\partial f}{\partial x_i}(x_i-a_i)}_{|p|=1,p=(--\underbrace{1}_i--)}=f(a)+f'(a)(x-a)$
     lineare Approximation in $a$
 -   $T_2(x)=f(a)+f'(a)(x-a)+\frac{1}{2!}\sum_{i,j=1}^n\frac{\partial^2f}{\partial x_i\partial x_j}(a)(x_i-a_i)(x_j-a_j)$
-    und $H_f(a):=(a_{ij})\in\M_n(\R)$,
+    und $H_f(a)\defeq (a_{ij})\in\M_n(\R)$,
     $a_{ij}=\frac{\partial^2f}{\partial x_i\partial x_j}(a)$ ist die
     sogenannte Hessematrix von $f$ in $a$. Damit erhält man
     $$T_2(x)f(a)+f'(a)(x-a)+\frac{1}{2}(x-a)^\top H_f(a)(x-a)$$
@@ -1858,7 +1859,7 @@ $$\text{Lagrange-Form des Restgliedes}$$
 \begin{proof}
 Sei $v=x-a$. Dann ist $S(a,x)=\{a+tv\mid t\in(0,1)\}$.
 
-Setze $\varphi:[0,1]\to\R$, $\varphi(t):=f(a+tv)$.
+Setze $\varphi:[0,1]\to\R$, $\varphi(t)\defeq f(a+tv)$.
 \begin{align*}
 \implies\varphi'(t)&=f'(a+tv)\cdot v\\
 &=\sum_{i=1}^n\frac{\partial f}{\partial x_i}(a+tv)v_i\\
@@ -1875,7 +1876,7 @@ $\implies\exists\vartheta\in(0,1)$ mit
 R_k^\varphi(1)&=\frac{\varphi^{(k+1)}(\vartheta)}{(k+1)!}(1-0)^{k+1}\\
 &=\frac{\varphi^{(k+1)}(\vartheta)}{(k+1)!}
 \end{align*}
-Sei $\xi:=\varphi(\vartheta)=a+\vartheta v\in S(a,x)$
+Sei $\xi\defeq\varphi(\vartheta)=a+\vartheta v\in S(a,x)$
 \begin{align*}
 \implies R_k^\varphi(1)&=\sum_{|p|=k+1}\frac{\partial^Pf(\overbrace{a+\vartheta v}^{\mathclap{\xi}})}{P!}\underbrace{v^P}_{\mathclap{=(x-a)^P}}\\
 &=R_k(x)
