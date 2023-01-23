@@ -1892,3 +1892,333 @@ $\implies\varphi(1)=R_k^\varphi(1)+T_k^\varphi(1)\iff f(\underbrace{a+v}_{\mathc
 \end{proof}
 ```
 :::
+
+## Lokale Extrema
+
+Sei $D\subseteq\R^n$ (nicht notwendigerweise offen),
+$f:D\to\R,\ a\in D$.
+
+-   $a$ heißt Stelle eines lokalen Maximums/Minimums g.d.w.
+    $$\exists\varepsilon>0:f(a)\ge/\le f(x)\quad\forall x\in K_\epsilon(a)\cup D.$$
+-   $a$ heißt Stelle eines globalen Maximums/Minimums auf $D$ g.d.w.
+    $$f(a)\ge/\le f(x)\quad\forall x\in D.$$
+
+## Notwendige Bedingung für lokale Extrema
+
+Sei $D\subseteq\R^n$ offen, $f:D\to\R$. Ist $a\in D$ Stelle eines
+lokalen Extremums und existiert in $a$ die partielle Ableitung von $f$,
+so ist $\nabla f(a)=0$.
+
+::: proof
+```{=tex}
+\begin{proof}
+    Sei $a$ lokale Extremstelle und $K_\epsilon(a)\subseteq D$.
+
+    $\implies\varphi: (-\varepsilon,\varepsilon)\to\R,\ \varphi(t)=f(a+tv),\ v=e_k$, besitzt in $t=0$ Extremum.
+
+    $\underbrace{\implies}_{\text{Mathe 1}}\varphi'(0)=0$
+
+    $\iff \lim_{k\to0}\frac{\varphi(h)-\varphi(0)}{h}=\lim_{h\to0}\frac{f(a+he_k)-f(a)}{h}=0=\frac{\partial f}{\partial x_k}(a)$
+\end{proof}
+```
+:::
+
+## Hinreichende Bedingung für lokale Extrema
+
+Sei $D\subseteq\R^n$ offen,
+$f\in\varphi^2(D,\R),\ a\in D,\ \nabla f(a)=0$.
+
+Dann:
+
+-   $H_f(a)$ positiv definit $\implies$ $a$ Stelle eines lokalen
+    Minimums.
+-   $H_f(a)$ negativ definit $\implies$ $a$ Stelle eines lokalen
+    Maximums.
+-   $H_f(a)$ indefinit $\implies$ $a$ ist Sattelpunkt
+-   Ist $H_f(a)$ positiv/negativ semidefinit, so ist keine Aussage
+    möglich.
+
+::: proof
+```{=tex}
+\begin{proof}
+\begin{abc}
+\item $\frac{\partial^2f}{\partial x_i\partial x_j}$ sind alle stetig auf $D$, d.h. $H_f(x)$ stetig. Man kann aufgrund der Stetigkeit zeigen: $$H_f(a)\text{ positiv definit}\implies\exists\epsilon>0:H_f(x)\text{ positiv definit}\forall x\in K_\epsilon(a).$$
+
+Für $x\in K_\epsilon(a)$ gilt: $$\exists\xi\in S(a,x)=\{a+t(x-a)\mid t\in(0,1)\}\subseteq K_\epsilon(a):$$
+
+\begin{align*}
+f(x)&=T_1(x)+R_1(x)\\
+&=f(a)+\underbrace{f'(a)(x-a)}_{\text{=0}}+\frac12\underbrace{(x-a)^\top H_f(\xi)(x-a)}_{\text{>0, falls $H_f(a)$ pos. def.}}\\
+&\ge f(a)
+\end{align*}
+
+$\implies$ $a$ Stelle eines lokalen Minimums.
+\item Analog.
+\item Verwendet man als Definition für Sattelpunkte.
+\end{abc}
+\end{proof}
+```
+:::
+
+## Kriterium von Sylvester
+
+Zuvor wurde die Definitheit von $H_f(a)$ untersucht. Die Definitheit
+kann mit den Eigenwerten festgestellt werden (siehe Mathe 2).
+
+Für positive/negative Definitheit gibt es auch das Kriterium von
+Sylvester (sehr einfach zu prüfen):
+
+Sei $A\in\M_n(\R)$, $A=(a_{ij})_{i,j=1}^n$. Dann heißt
+$A_k\defeq(a_{ij})_{i,j=1}^k\in\M_k(\R)$ $k$-te Haupminor von $A$,
+$k\le n$.
+
+::: bsp
+$$A=\begin{pmatrix}1&2&-1\\0&1&1\\1&-1&2\end{pmatrix}$$
+
+$\implies A_1=(1),\ A_2=\begin{pmatrix}1&2\\0&1\end{pmatrix},\ A_3=A$.
+:::
+
+Eine symmetrische Matrix $A\in\M_n(\R)$ ist
+
+-   positiv definit $\iff$ $\det(A_k)>0\quad\forall k\in\{1,...,n\}$
+-   negativ definit $\iff$
+    $\det(A_k)\begin{cases}<0&k\text{ ungerade}\\>0&k\text{ gerade}\end{cases}$
+
+::: bem
+Über Semi-/Indefinitheit kann mit Sylvester keine Aussage gemacht
+werden! Speziell für $2\times2$-Matrizen gilt jedoch:
+$$A\in\M_2(\R)\text{ indefinit}\iff\det(A)<0.$$
+:::
+
+::: bsp
+-   $f(x,y)=x^2+y^2+xy+1,\quad f:\R^2\to\R$. Es gilt:
+    $$f'(x,y)=\begin{pmatrix}2x+y,2y+x\end{pmatrix}=(0,0)\iff\begin{cases}2x+y=0\\2y+x=0\end{cases}\iff x=y=0.$$
+    Demnach gilt
+    $H_f(x,y)=\begin{pmatrix}2&1\\1&2\end{pmatrix}=H_f(0,0)$. Durch
+    Sylvester folgt mit $\det(A_1)=2$, $\det(A_2)=3$ positive
+    Definitheit.
+    $\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}$
+    ist damit lokale Minimalstelle und $f(0,0)=1$ das lokale Minimum.
+-   TODO?
+-   TU DU!
+:::
+
+## Implizite Funktionen
+
+Problemstellung:
+
+-   Niveaulinien einer Funktion $h:\R^2\to\R$: TODO Graph. Frage: Kann
+    $N_c(h)$ lokal um $\begin{pmatrix}a\\b\end{pmatrix}\in N_c(h)$ als
+    Funktion $y=f(x)$ dargestellt werden, d.h. $h(x,f(x))-c=0$?
+    -   $\epsilon$, $\delta$ müssen klein genug gewählt werden, damit
+        einem $x$-Wert nur ein $y$-Wert zugeordnet wird.
+    -   Für $\begin{pmatrix}a'\\b'\end{pmatrix}$A gibt es keine
+        $\epsilon$,$\delta>0$, sodass jedem $x\in K_\delta(a')$ genau
+        ein $y\in K_\epsilon(b')$ zugeordnet werden kann. Daher
+        Forderung: $\frac{\partial h}{\partial y}(a',b')\ne0$.
+-   Anders formuliert: Ist $F(x,y)\defeq h(x,y)-c=0$ in einer Umgebung
+    von $x$ nach $y$ auflösbar? Z.B.:
+    -   $F(x,y)=x^2+y^2+1=0$ nicht lösbar, da $F(x,y)>0$. Daher
+        Forderung: $\exists a,b\in\R:F(a,b)=0$.
+    -   $F(x,y)=x^2+y^2-1=0,\quad x,y\in\R\\\iff y^2=1-x^2\\\implies f_1(x)=\sqrt{1-x^2}\land f_2(x)=-\sqrt{1-x^2}\quad\text{für}x\in(-1,1)\\f_1,f_2\in\varphi^1(-1,1)$
+        Lösungsfaktoren für $x\ne\pm1$.
+-   Allgemein: Sei $x\in\R^P$, $y\in\R^a$ und
+    $\begin{pmatrix}x\\y\end{pmatrix}\defeq(x_1,...,x_p,y_1,...,y_q)^\top$,
+    $F:\R^p\times\R^q\to\R^q,\quad F=\begin{pmatrix}F_1\\\vdots\\F_q\end{pmatrix}$,
+    $F(x,y)\defeq F(x_1,...,x_p,y_1,...,y_q).\\F(x,y)=0\text{ auf }G\subseteq\R^p$
+    nach $y$ auflösen heißt, $f:G\subseteq\R^p\to\R^q$ zu finden, sodass
+    $F(x,f(x))=0\quad\forall x\in G.\\$ D.h.:
+    -   $F_i(x_1,...,x_p,y_1,...,y_q)=0\quad\forall i\in\{1,...,q\}$ auf
+        $G$ nach $y_q,...,y_q$ auflösen, also $f_i:G\to\R$ best. mit
+        $F_i(x_1,...,x_p,f_1(x_1,...,x_p),...,f_q(x_1,...,x_p))=0\quad\forall i\in\{1,...,q\}.$
+-   Falls $F$ in c) partiell differenzierbar, so sei
+    `\begin{align*}\frac{\partial F}{\partial x}&\defeq\begin{pmatrix}\frac{\partial F_1}{\partial x_1}&\cdots&\frac{\partial F_1}{\partial x_p}\\\vdots&&\vdots\\\frac{\partial F_q}{\partial x_1}&\cdots&\frac{\partial F_q}{\partial x_p}\end{pmatrix}\in\M_{q,p}(\R)\\\frac{\partial F}{\partial x}&\defeq\begin{pmatrix}\frac{\partial F_1}{\partial y_1}&\cdots&\frac{\partial F_1}{\partial y_q}\\\vdots&&\vdots\\\frac{\partial F_q}{\partial y_1}&\cdots&\frac{\partial F_q}{\partial y_q}\end{pmatrix}\in\M_q(\R)\end{align*}`{=tex}
+
+## Hauptsatz über implizite Funktionen
+
+Seien $G\subseteq\R^P$, $H\subseteq\R^q$ nichtleer und offen,
+$F:G\times H\to\R^q$ stetig differenzierbar. Seien $a\in G$, $b\in H$
+mit $F(a,b)=0$ und $\frac{\partial F}{\partial y}(a,b)$ invertierbar.
+
+Dann gibt es $\epsilon,\delta>0$ und genau eine stetige Funktion
+$f:K_\delta(a)\to K_\epsilon(b)$ mit
+
+1.  $f(a)=b$ und $F(x,f(x))=0\quad\forall x\in K_\delta(a)$
+2.  $\delta$ kann so gewählt werden, dass $f\in\varphi^1(K_\delta(a))$
+    und
+    $$f'(x)=-\left(\frac{\partial F}{\partial y}(x,f(x))\right)^{-1}\cdot\frac{\partial F}{\partial x}(x,f(x))\forall x\in K_\delta(a).$$
+
+::: proof
+TODO. ODER NICHT. MIR DOCH EGAL.
+:::
+
+::: bem
+Da $h_x(y)$ im Beweis der Kontraktion, kann man
+$f:K_\delta(a)\to K_\epsilon(b)$ annähern durch
+$(f_n)_{n\ge0},\ f_n:K_\delta(a)\to\R^d\\\quad f_0(x)\defeq b\quad\forall x\in K_\delta(a)\\\quad f_{n+1}(x)\defeq h_x(f_n(x))=f_n(x)-A^{-1}F(x,f_n(x))$
+
+Es gilt ausserdem $\forall x\in K_\delta(a)$:
+`\begin{align*}\|f_n(x)-f(x)\|&\le\frac{q^n}{1-q}\|f_1(x)-f_0(x)\|\\&=\left(\frac12\right)^{n-1}\|f_1(x)-b\|\end{align*}`{=tex}
+
+$\implies f_n\to f$ gleichmäßig.
+:::
+
+::: bsp
+-   $F(x,y)=x^3+y^3+x-y$,
+    $\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}\\A=\frac{\partial F}{\partial y}(0,0)=(3y^2-1)(0,0)=-1\ne0\\\implies A^{-1}=-1\text{, d.h. $A$ invertierbar}\\\implies\exists\epsilon,\delta>0\text{ und }f:K_\delta(0)\to K_\epsilon(0): F(x,f(x))=0$
+-   Annäherung an $f$ (siehe Bemerkung):
+    `\begin{align*}f_0(x)&=0=b\\f_1(x)&=f_0(x)-A^{-1}\cdot F(x,f_0(x))\\&=0+1\cdot(x^3+x)=x^3+x\\f_2(x)&=(x^3+x)+1\cdot F(x,x^3+x)\\&=x^3+x+x^3+(x^3+x)^3+x-x^3-x\\&=x^9+3x^7+3x^5+2x^3+x\end{align*}`{=tex}
+-   Ableitung in $x=0$:
+    $$f'(0)=-\left(\underbrace{\frac{\partial F}{\partial y}(0,0)}_{=-1}\right)^{-1}\cdot\underbrace{\frac{\partial F}{\partial x}(0,0)}_{=1}=1$$
+:::
+
+## Lokale Umkehrbarkeit
+
+### Diffeomorphismus
+
+$U,V\subseteq\R^n$ offen, $f:U\to V$.
+
+-   $f$ heißt Diffeomorphismus $\defiff$
+    -   $f$ bijektiv und differenzierbar
+    -   $f^{-1}:V\to U$ differenzierbar
+-   $f$ heißt $\varphi^k$-Diffeomorphismus $\defiff$
+    -   $f$ Diffeomorphismus
+    -   $f,f^{-1}$ $k$-mal stetig differenzierbar
+
+::: bem
+$f: \R\to\R$ Diffeomorphismus.
+
+$\implies (f^{-1}(y))'=\frac{1}{f'(x)},\quad x=f^{-1}(y)$
+
+::: bsp
+$(\ln y)'=\frac{1}{(e^x)'}=\frac{1}{e^x}=\frac1y,\quad y>0$
+:::
+:::
+
+### Ableitung der Umkehrfunktion
+
+$f:U\subseteq\R^n\to V$ Diffeomorphismus $\implies f'(x)$ invertierbar
+und $$\forall y\in V:(f^{-1}(y))'=(f'(x))^{-1},\quad x=f^{-1}(y)$$
+
+::: proof
+```{=tex}
+\begin{proof}
+$f^{-1}\circ f:U\to U,\ f^{-1}\circ f(x)=x$
+
+$\implies E_n=(f^{-1}\circ f)'(x)=(f^{-1}(f(x))'\cdot f'(x)$
+
+$\iff(f^{-1}(y))'=(f'(x))^{-1},\ x=f^{-1}(y)$
+\end{proof}
+```
+:::
+
+::: bem
+Sei $f:D\subseteq\R^n\to\R^n$ differenzierbar, $D$ offen.
+
+Für $n=1$: Falls $f'(x)>/<0$ auf einem Intervall $(a,b)$, so ist $f$
+injektiv und umkehrbar auf $(a,b)$.
+
+Für $n>1$ gilt eine ähnliche Aussage nur eingeschränkt.
+
+::: bsp
+$f:\R^2\to\R^2,\ f(x,y)=e^x\begin{pmatrix}\cos y\\\sin y\end{pmatrix}$
+
+$\implies f'(x,y)=e^x\begin{pmatrix}\cos y&-\sin y\\\sin y&\cos y\end{pmatrix}$
+
+$\implies\det f'(x,y)=e^x>0\quad\forall x,y\in\R$
+
+Aber $f$ ist nicht injektiv:
+$$f(x,y+k\cdot2\pi)=f(x,y)\quad\forall k\in\Z$$ Die Umkehrbarkeit gilt
+jedoch lokal - Überleitung!
+:::
+:::
+
+### Lokale Umkehrbarkeit
+
+Sei $f\in\varphi^1(D,\R^n)$, $D\subseteq\R^n$ offen, $x_0\in D$. Falls
+$f'(x_0)$ invertierbar, so gibt es offene Umgebungen $U$ von $x_0$, $V$
+von $y_0=f(x_0)$ mit $f(U)=V$, sodass $f:U\to V$
+$\varphi^1$-Diffeomorphismus.
+
+::: proof
+TODO: Ojemine
+:::
+
+### Korollar
+
+Sei $f\in\varphi^1(D,f(D))$ bijektiv und $D,f(D)\subseteq\R^n$ offen.
+
+Dann sind äquivalent:
+
+1.  $f$ ist $\varphi^1$-Diffeomorphismus
+2.  $f'(x)$ invertierbar $\forall x\in D$
+
+::: proof
+```{=tex}
+\begin{proof}
+~\\
+\begin{itemize}
+\item $1\implies 2$: wegen Ableitung der Umkehrfunktion
+\item $2\implies 1$: $f$ bijektiv $\implies\exists f^{-1}:f(D)\to D$.\\Zu zeigen ist: $f^{-1}$ stetig differenzierbar.\\Sei $x_0\in D\implies \exists g:V\to U: g=f^{-1}\mid_v$, wobei $U\subseteq D$, $V\subseteq f(D)$ Umgebungen von $x_0$ bzw. $y_0=f(x_0)$. $\implies f^{-1}$ stetig differenzierbar in $y_0$.\\$x_0$ beliebig $\implies f^{-1}$ stetig differenzierbar auf $f(d)$.
+\end{itemize}
+\end{proof}
+```
+:::
+
+### Satz über offene Abbildungen
+
+Sei $f\in\varphi^1(D,\R^n)$, $D\subseteq\R^n$ offen, sodass $f'(x)$
+invertierbar $\forall x\in D$. $\implies W\defeq f(D)\subseteq\R^n$
+offen.
+
+Insbesondere: $f$ injektiv auf $D$ $\implies f:D\to W$
+$\varphi^1$-Diffeomorphismus.
+
+::: proof
+```{=tex}
+\begin{proof}
+Sei $y_0\in W$.
+
+$\implies\exists x_0\in D:f(x_0)=y_0$
+
+$\implies f'(x_0)$ invertierbar
+
+$\implies \exists$ offene Umgebung $U$ von $x_0$, $V$ von $y_0$ mit $U\subseteq D$, $V\subseteq W$, sodass $f:U\to V$ $\varphi^{-1}$-Diffeomorphismus, d.h. bijektiv
+
+$\implies\exists\epsilon>0: K_\epsilon(y_0)\subseteq V\subseteq W$
+
+$\implies W$ offen.
+
+Falls $f$ injektiv, so ist $f:D\to W$ bijektiv. $\implies f$ $\varphi^1$-Diffeomorphismus.
+\end{proof}
+```
+:::
+
+::: bsp
+TODO. Wer braucht schon Beispiele? Alles trivial.
+:::
+
+## Extrema unter Nebenbedingungen
+
+::: bsp
+TODO.
+:::
+
+Gegeben: $f:D\subseteq\R^n\to\R$ und $g:D\subseteq\R^n\to\R^q\quad q<n$.
+
+$f$ besitzt in $x_0\in D$ ein lokales Maximum/Minimum unter der
+Nebenbedingung $g(x)=0\defiff$
+
+-   $x_0\in N\defeq\{x\in D\mid g(x)=0\}$
+-   $\exists$ offene Umgebung $U$ von $x_0$ mit
+    $f(x)\le/\ge f(x_0)\quad \forall x\in U\cap N$
+
+## Multiplikatorenregel von Lagrange
+
+Sei $D\subseteq\R^n$ offen, $f:D\to\R$, $g:D\to\R^q\ (q<n)$ beide stetig
+differenzierbar. $f$ besitze in $x_0\in D$ ein lokales Extremum unter
+der Nebenbedingung $g(x)=0$.
+
+Dann: Falls $g(g'(x_0))=q$, so gibt es $q$ Zahlen
+$\lambda_1,...,\lambda_q\in\R$ (Lagrange-Multiplikatoren), sodass
+$$f'(x_0)+\sum_{j=1}^q\lambda_jq'_j(x_0)=0$$
