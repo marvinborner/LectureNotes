@@ -4,7 +4,7 @@ all:
 	@mkdir -p build/
 	@pandoc main.md --filter pandoc-latex-environment --toc -N -V fontsize=11pt -V geometry:a4paper -V geometry:margin=2.5cm -o $(CURDIR)/build/main.tex --pdf-engine-opt=-shell-escape -H header.tex -B title.tex >/dev/null
 	@(pdflatex -shell-escape -halt-on-error -output-directory $(CURDIR)/build/ $(CURDIR)/build/main.tex | grep '^!.*' -A200 --color=always ||true) &
-	@progress 5 pdflatex
+	@progress 3 pdflatex
 	@cp build/main.pdf . &>/dev/null
 	@echo done.
 

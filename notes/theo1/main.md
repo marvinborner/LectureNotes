@@ -1225,4 +1225,4 @@ function KruskalNaiveMST(V,E,W)
 
 -   sorting $\O(|E|\log|E|)$
 -   check for cycle: $\O(|E|\cdot?)$
-- total: $\O(|E|\log|E|+|E|\cdot?)$
+-   total: $\O(|E|\log|E|+|E|\cdot?)$

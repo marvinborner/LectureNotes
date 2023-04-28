@@ -544,7 +544,7 @@ Seien $(R, +, \cdot)$ und $(R',\oplus,\odot)$ Ringe.
 
 ::: bsp
 1.  Boolesche Algebra:
-    $$(\{f,w\}, \texttt{XOR}, 1)\cong ({0,1},\oplus,\odot)$$
+    $$(\{f,w\}, \texttt{XOR}, 1)\cong (\{0,1\},\oplus,\odot)$$
     $\psi(f)=0,\psi(w)=1$. $\psi$ Isomorphismus, falls
     Verknüpfungstafeln übereinstimmen
     `\begin{center}\begin{tabular}{c||c c}\texttt{XOR}&f&w\\\hline f&f&w\\w&w&f\end{tabular}\end{center}`{=tex}
@@ -1165,7 +1165,7 @@ beschränkt.
 
 $f:D\subseteq\R^n\to\R$ stetig, $D$ kompakt.
 
-$\implies\exists x_\star,x^\star\in D: \underbrace{f(x_\star)}_\mathrm{min}\le f(x)\le f(x^\star)_\mathrm{max}\quad\forall x\in D$
+$\implies\exists x_\star,x^\star\in D: \underbrace{f(x_\star)}_\mathrm{min}\le f(x)\le\underbrace{f(x^\star)}_\mathrm{max}\quad\forall x\in D$
 
 ::: proof
 ```{=tex}
@@ -1257,7 +1257,7 @@ $a=(a_1,...,a_n)^\top\in D$.
     $$f'(a)^\top=\begin{pmatrix}\frac{\partial f}{\partial x_1}(a)\\\vdots\\\frac{\partial f}{\partial x_n}(a)\end{pmatrix}=:\nabla f(a)=\grad(f(a))\in\R^n$$
     als Gradienten von $f$ in $a$.
 
-## Geometriche Deutung der partiellen Ableitung
+## Geometrische Deutung der partiellen Ableitung
 
 Sei $f:\R^2\to\R,\ a\in\R^2,\ a=\begin{pmatrix}a_1\\a_2\end{pmatrix}$.
 
@@ -1683,11 +1683,12 @@ $D\subseteq\R$ offen, $f:D\to\R$.
     in jedem Punkt von $D$ partiell differenzierbar ist und alle
     $\frac{\partial f}{\partial x_i}$ ($i\in\{1,...,n\}$) auf $D$ stetig
     sind
--   $f$ heißt 2-mal stetig differezierbar ($f\in\mathcal{C}^2(D)$), wenn
-    $f\in\mathcal{C}^1(D)$ und alle $\frac{\partial f}{\partial x_j}$
-    ($j\in\{1,...,n\}$) $\in\mathcal{C}^1(D)$. Die partielle Ableitung
-    von $\frac{\partial f}{\partial x_j}$ nach $x_k$ wird mit
-    $\frac{\partial^2f}{\partial x_2\partial x_j}$ bezeichnet (partielle
+-   $f$ heißt 2-mal stetig differenzierbar ($f\in\mathcal{C}^2(D)$),
+    wenn $f\in\mathcal{C}^1(D)$ und alle
+    $\frac{\partial f}{\partial x_j}$ ($j\in\{1,...,n\}$)
+    $\in\mathcal{C}^1(D)$. Die partielle Ableitung von
+    $\frac{\partial f}{\partial x_j}$ nach $x_k$ wird mit
+    $\frac{\partial^2f}{\partial x_k\partial x_j}$ bezeichnet (partielle
     Ableitung zweiter Ordnung). Für $k=j$ schreibt man kurz
     $\frac{\partial^2f}{\partial x_j^2}$.
 -   Analog ist $f$ $s$-mal stetig differenzierbar
