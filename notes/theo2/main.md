@@ -9,12 +9,12 @@ pandoc-latex-environment:
   - bsp
   defi-box:
   - defi
+  motiv-box:
+  - motiv
   proof-box:
   - proof
   satz-box:
   - satz
-  visu-box:
-  - visu
 toc-title: Inhalt
 ---
 
@@ -24,11 +24,11 @@ toc-title: Inhalt
 ```
 # Reguläre Sprachen und endliche Automaten
 
-## Motivation
-
+::: motiv
 -   Eingabe
 -   Verarbeitung (Berechnungen, Zustände)
 -   Ausgabe
+:::
 
 ## Wörter und Sprachen
 
@@ -272,41 +272,42 @@ $M_2$ das entsprechende Wort akzeptieren. Der Satz folgt. `\qed`{=tex}
 $M_1$: \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
   \tikzstyle{every state}=[]
 
-    \node[state,initial]   (q_1)                    {$q_1$};
-    \node[state,accepting] (q_2)  [right of=q_1]    {$q_2$};
+    \node[state,initial]   (s_1)                    {$s_1$};
+    \node[state,accepting] (s_2)  [right of=s_1]    {$s_2$};
 
     \path[->]
-    (q_1) edge [loop above] node {0}    (   )
-          edge [bend left]  node {1}    (q_2)
-    (q_2) edge [bend left]  node {0}    (q_1)
-          edge [loop above] node {1}    (   );
+    (s_1) edge [bend left]  node {0,1}  (s_2)
+    (s_2) edge [bend left]  node {0,1}  (s_1);
 \end{tikzpicture}\end{center}
-$M_2$: TODO \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+$M_2$: \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
   \tikzstyle{every state}=[]
 
-    \node[state,initial]   (q_1)                    {$q_1$};
-    \node[state]           (q_2)  [right of=q_1]    {$q_2$};
-    \node[state,accepting] (q_2)  [right of=q_2]    {$q_2$};
+    \node[state,initial]   (q_1)                         {$q_1$};
+    \node[state]           (q_2)  [below right of=q_1]   {$q_2$};
+    \node[state,accepting] (q_3)  [above right of=q_2]   {$q_3$};
 
     \path[->]
-    (q_1) edge [loop above] node {0}    (   )
+    (q_1) edge [bend left]  node {0}    (q_3)
           edge [bend left]  node {1}    (q_2)
     (q_2) edge [bend left]  node {0}    (q_1)
-          edge [loop above] node {1}    (   )
-    (q_3) edge [bend left]  node {0}    (q_1)
-          edge [loop above] node {1}    (   );
+          edge [bend right] node {1}    (q_3)
+    (q_3) edge [loop above] node {0,1}  (   );
 \end{tikzpicture}\end{center}
-$M_1\times M_2$: TODO \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+$M_1\times M_2$: \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto]
   \tikzstyle{every state}=[]
 
-    \node[state,initial]   (q_1)                    {$q_1$};
-    \node[state,accepting] (q_2)  [right of=q_1]    {$q_2$};
+    \node[state,initial]   (s_1q_1)                           {$s_1,q_1$};
+    \node[state,accepting] (s_2q_3)  [above right of=s_1q_1]  {$s_2,q_3$};
+    \node[state,accepting] (s_1q_3)  [below right of=s_2q_3]  {$s_1,q_3$};
+    \node[state,accepting] (s_2q_2)  [below right of=s_1q_1]  {$s_2,q_2$};
 
     \path[->]
-    (q_1) edge [loop above] node {0}    (   )
-          edge [bend left]  node {1}    (q_2)
-    (q_2) edge [bend left]  node {0}    (q_1)
-          edge [loop above] node {1}    (   );
+    (s_1q_1) edge [bend left]  node {0}    (s_2q_3)
+             edge [bend left]  node {1}    (s_2q_2)
+    (s_2q_2) edge [bend right] node {1}    (s_1q_3)
+             edge [bend left]  node {0}    (s_1q_1)
+    (s_1q_3) edge [bend left]  node {0,1}  (s_2q_3)
+    (s_2q_3) edge [bend left]  node {0,1}  (s_1q_3);
 \end{tikzpicture}\end{center}
 ```
 :::
@@ -328,22 +329,47 @@ $L_1\setminus L_2$ reguläre Sprachen.
 ## Nicht-deterministische Automaten
 
 ::: bsp
-TODO (ggf. auch Sipser).
-
 ```{=tex}
 \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
   \tikzstyle{every state}=[]
 
     \node[state,initial]   (q_1)                    {$q_1$};
-    \node[state,accepting] (q_2)  [right of=q_1]    {$q_2$};
+    \node[state]           (q_2)  [right of=q_1]    {$q_2$};
     \node[state]           (q_3)  [right of=q_2]    {$q_3$};
+    \node[state,accepting] (q_4)  [right of=q_3]    {$q_4$};
 
     \path[->]
-    (q_1) edge [loop above] node {0}    (   )
-          edge [bend left]  node {1}    (q_2)
-    (q_2) edge [bend left]  node {0}    (q_1)
-          edge [loop above] node {1}    (   );
+    (q_1) edge []           node {1}               (q_2)
+          edge [loop above] node {0,1}             (   )
+    (q_2) edge []           node {0,$\varepsilon$} (q_3)
+    (q_3) edge []           node {1}               (q_4)
+    (q_4) edge [loop above] node {0,1}             (   );
 \end{tikzpicture}\end{center}
+```
+Der komplette Berechnungsbaum:
+
+```{=tex}
+\begin{center}\begin{forest} for tree={l=1.5cm,circle,draw},
+    [$q_1$
+      [$q_1$,edge label={node[midway,right]{0}}
+        [$q_1$,edge label={node[midway,right]{1}}
+          [$q_1$,edge label={node[midway,right]{0}}
+            [$q_1$,edge label={node[midway,right]{1}}
+              [$q_1$,edge label={node[midway,right]{0}}]]
+            [$q_2$,edge label={node[midway,right]{1}}
+              [$q_3$,edge label={node[midway,right]{0}}]]
+            [$q_3$,edge label={node[midway,right]{1$\varepsilon$}}]]
+          [$q_2$,edge label={node[midway,right]{1}}]
+          [$q_3$,edge label={node[midway,right]{1$\varepsilon$}}
+            [$q_4$,edge label={node[midway,right]{1}}
+              [$q_4$,edge label={node[midway,right]{0}}]]]]
+        [$q_2$,edge label={node[midway,right]{1}}
+          [$q_3$,edge label={node[midway,right]{0}}
+            [$q_4$,edge label={node[midway,right]{1}}
+              [$q_4$,edge label={node[midway,right]{1}}
+                [$q_4$,edge label={node[midway,right]{0}}]]]]]
+        [$q_3$,edge label={node[midway,right]{1$\varepsilon$}}]]]
+\end{forest}\end{center}
 ```
 :::
 
@@ -377,7 +403,9 @@ eine akzeptierende Berechnung von $M$ auf $w$ gibt.
 :::
 
 ::: bem
-$\varepsilon$-Transitionen: TODO.
+$\varepsilon$-Transitionen: Ein nicht-deterministischer Automat kann bei
+"Lesen" des leeren Wortes $\varepsilon$ einen Übergang machen, falls es
+so in der Übergangsfunktion definiert ist.
 :::
 
 ::: bsp
@@ -386,8 +414,36 @@ Betrachte die regulären Sprachen
 -   $A\defeq\{x\in\{0,1\}^*\mid\text{Anzahl }0\text{ gerade}\}$
 -   $B\defeq\{x\in\{0,1\}^*\mid\text{Anzahl }0\text{ ungerade}\}$
 
-Zugehörige Automaten: TODO
+Zugehörige Automaten:`\bigskip`{=tex}
 
+```{=tex}
+\begin{minipage}{0.5\textwidth}\begin{center}
+$M_A$:\bigskip\\\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+  \tikzstyle{every state}=[]
+
+    \node[state,initial,accepting]  (q_1)                 {$q_1$};
+    \node[state]                    (q_2)  [right of=q_1] {$q_2$};
+
+    \path[->]
+    (q_1) edge [loop above] node {1}  (   )
+          edge [bend left]  node {0}  (q_2)
+    (q_2) edge [loop above] node {1}  (   )
+          edge [bend left]  node {0}  (q_1);
+\end{tikzpicture}\end{center}\end{minipage}%
+\begin{minipage}{0.5\textwidth}\begin{center}
+$M_B$:\bigskip\\\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+  \tikzstyle{every state}=[]
+
+    \node[state,initial]   (q_1)                 {$q_1$};
+    \node[state,accepting] (q_2)  [right of=q_1] {$q_2$};
+
+    \path[->]
+    (q_1) edge [loop above] node {1}  (   )
+          edge [bend left]  node {0}  (q_2)
+    (q_2) edge [loop above] node {1}  (   )
+          edge [bend left]  node {0}  (q_1);
+\end{tikzpicture}\end{center}\end{minipage}
+```
 Nun betrachte *Konkatenation $AB$*. Um die Sprache zu erkennen, müsste
 der Automat bei einer Eingabe zunächst einen ersten Teil $A$ des Wortes
 betrachten und schauen, ob die Anzahl der $0$ gerade ist. **Irgendwann**
@@ -396,7 +452,27 @@ und er müsste schauen, ob dort die Anzahl der $0$ ungerade ist.
 
 $$\text{"Irgendwann"}\implies\text{nicht-deterministisch.}$$
 
-TODO: Graph.
+```{=tex}
+\begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+  \tikzstyle{every state}=[]
+
+    \node[state,initial,accepting]  (q_1_1)                   {$q_1$};
+    \node[state]                    (q_2_1)  [right of=q_1_1] {$q_2$};
+    \node[state]                    (q_1_2)  [below of=q_1_1] {$\hat q_1$};
+    \node[state,accepting]          (q_2_2)  [right of=q_1_2] {$\hat q_2$};
+
+    \path[->]
+    (q_1_1) edge [loop above] node {1}             (   )
+            edge [bend left]  node {0}             (q_2)
+            edge []           node {$\varepsilon$} (q_1_2)
+    (q_2_1) edge [loop above] node {1}             (   )
+            edge [bend left]  node {0}             (q_1_1)
+    (q_1_2) edge [loop below] node {1}             (   )
+            edge [bend left]  node {0}             (q_2_2)
+    (q_2_2) edge [loop below] node {1}             (   )
+            edge [bend left]  node {0}             (q_1_2);
+\end{tikzpicture}\end{center}
+```
 :::
 
 ## Mächtigkeit
@@ -460,7 +536,7 @@ Sei $R$ ein regulärer Ausdruck. Dann ist die *von $R$ induzierte Sprache
 $L(R)$* wie folgt definiert:
 
 -   $R=\emptyset\implies L(R)=\emptyset$
--   $R=\epsilon\implies L(R)=\{\varepsilon\}$
+-   $R=\varepsilon\implies L(R)=\{\varepsilon\}$
 -   $R=\sigma\text{ für ein }\sigma\in\Sigma\implies L(R)=\{\sigma\}$
 -   $R=R_1\cup R_2\implies L(R)=L(R_1)\cup L(R_2)$
 -   $R=R_1\circ R_2\implies L(R)=L(R_1)\circ L(R_2)$
@@ -474,4 +550,592 @@ Ausdruck beschrieben wird.
 ::: proof
 Strukturelle Induktion. Tja.
 :::
+:::
+
+# Pumping-Lemma
+
+::: motiv
+Frage: Gibt es Sprachen, die nicht regulär sind?
+
+::: bsp
+$$L=\{0^n1^n\mid n\in\N\}=\{01,0011,00111,...\}$$ Ein Automat, der $L$
+erkennt, müsste vermutlich "zählen" können. Mit endlich vielen Zuständen
+scheint dies für beliebig große Zahlen nicht möglich zu sein.
+
+Aber: Wir kann man das formal beweisen?
+:::
+:::
+
+::: satz
+Sei $A$ eine reguläre Sprache über das Alphabet $\Sigma$. Dann gibt es
+eine natürliche Zahl $n$, sodass sich alle Wörter $s\in A$ mit Länge
+$|s|\ge n$ zerlegen lassen in drei Teilworte $s=xyz$, mit
+$x,y,z\in\Sigma^*$, sodass gilt:
+
+-   $|y|>0$,
+-   $|xy|\le n$,
+-   $\forall i\ge0: xy^iz\in A$
+
+::: proof
+Idee: Ein Automat mit $n$ Zuständen besucht für die Verarbeitung eines
+Wortes $w$ mit Länge $>n$ immer $n+1$ Zustände $\implies$ es gibt einen
+Zustand, der mindestens zweimal besucht wird.
+:::
+:::
+
+::: bem
+Aus der Kontraposition folgt: $A$ nicht regulär
+$\implies\forall n\exists s\forall x,y,z\in\Sigma^*\exists i:xy^iz\notin A$
+:::
+
+::: bsp
+Wir zeigen mit dem Pumping-Lemma, dass $L=\{0^n1^n\mid n\in\N\}$ nicht
+regulär ist.
+
+::: proof
+Betrachte ein beliebiges $n\in\N$. Wähle das Wort $s=0^n1^n$ (es gilt
+$|s|>n$). Sei nun $xyz=s$ eine beliebige Zerlegung (mit $|y|>0$,
+$|xy|\le n$). Man muss nun ein $i$ finden, soadss $xy^iz$ nicht in $L$
+ist.
+
+-   Fall 1: $y$ besteht nur aus $0$en:
+    $s=\overbrace{0}^x\overbrace{00}^y\overbrace{...0111...1}^z$. Dann
+    ist $xy^2z\notin L$ (da es mehr $0$en als $1$en hat).
+-   Fall 2: $y$ besteht nur aus $1$en: analog.
+-   Fall 3: $y$ hat $0$en und $1$en:
+    $s=\overbrace{0...0}^x\overbrace{011}^y\overbrace{...1}^z$. Dann ist
+    aber $xy^2z\notin L$.
+:::
+:::
+
+## Pushdown automaton
+
+::: motiv
+Endliche Automaten haben nur endlichen Speicher, können also nicht mal
+zählen. Deshalb ein erweitertes Modell: Automat mit Stack als Speicher.
+:::
+
+::: defi
+Ein nicht deterministischer *Kellerautomat* besteht aus einem 6-Tupel
+($Q$, $\Sigma$, $\Gamma$, $\delta$, $q_0$, $F$), wobei gilt:
+
+-   $Q$ endliche Zustandsmenge
+-   $\Sigma$ Eingabealphabet
+-   $\Gamma$ Stack-Alphabet
+-   $q_0\in Q$ Startzustand
+-   $F\subset Q$ Menge der akzeptierenden Zustände
+-   Übergangsfunktion:
+    $$\delta: Q\times(\Sigma\cup\{\varepsilon\})\times(\Gamma\cup\{\varepsilon\})\to\pot(Q\times(\Gamma\cup\{\varepsilon\}))$$
+:::
+
+::: bsp
+$$L=\{ww^R\mid w\text{ Wort über }\Sigma\}$$ wobei $w^R$ das Wort $w$
+rückwärts ist, kann von einem (nicht-deterministischen) Kellerautomaten
+erkannt werden.
+:::
+
+::: bsp
+$$L=\{a^nb^nc^n\mid n\in\N\}$$, kann von einem Kellerautomaten *nicht*
+erkannt werden.
+:::
+
+::: bem
+Die Sprachen, die von einem nicht-deterministischen Kellerautomaten
+erkannt werden können, heißen *kontextfreie Sprachen*. Bei
+deterministischen Kellerautomaten heißen sie entsprechend
+*deterministische kontextfreie Sprachen*.
+:::
+
+## Grammatiken
+
+Nicht wirklich relevant.
+
+::: bem
+-   Backus-Naur Schreibweise
+-   Chomsky-Hierarchie
+:::
+
+# Turingmaschinen
+
+::: motiv
+Ein allgemeineres Modell eines Computers:
+
+-   kann eine Eingabe lesen
+-   hat beliebig viel Speicherplatz
+-   kann Dinge an beliebigen Stellen in den Speicher schreiben/lesen
+-   kann beliebig viele Rechenschritte machen
+:::
+
+::: bsp
+Betrachte die Sprache $L=\{w\#w\mid w\in\{0,1\}^*\}$.
+
+-   lies den ersten Buchstaben und merke
+-   überschreibe mit Symbol $x\notin\{0,1,\#\}$
+-   nach rechts bis $\#$ erscheint
+-   vergleiche nächsten ($\ne y$) Buchstabe mit gemerkten
+-   falls gleich:
+    -   überschreibe mit $y\notin\{0,1,\#,x\}$
+    -   gehe zurück bis $x$
+    -   wiederhole
+:::
+
+::: defi
+Eine *Turingmaschine (TM)* ist ein 7-Tupel
+$(Q,\Sigma,\Gamma,\delta,q_0,q_{\text{accept}}, q_{\text{reject}})$:
+
+-   $Q$ ist eine endliche Menge von *Zuständen*
+-   $\Sigma$ ist eine endliche Menge, das *Eingabealphabet*
+-   $\Gamma$ ist eine endliche Menge, das *Arbeitsalphabet*, mit
+    $\Sigma\subset\Gamma$ und einem Leerzeichen
+    `\textvisiblespace`{=tex}
+-   $\delta: Q\times\Gamma\to Q\times\Gamma\times\{L,R\}$ die
+    *Übergangsfunktion*
+-   $q_0\in Q$ der *Startzustand*
+-   $q_\text{accept}\in Q$ der *akzeptierende Endzustand*
+-   $q_\text{reject}\in Q$, $q_\text{reject}\ne q_\text{accept}$ der
+    *verwerfende Endzustand*
+:::
+
+::: bem
+-   Es gibt genau einen akzeptierenden und verwerfenden Zustand
+-   Die TM beendet ihre Berechnung, sobald sie einen dieser beiden
+    Zustände erreicht
+-   Das Band der TM hat "ein linkes Ende", nach rechts ist es
+    unbeschränkt
+:::
+
+::: bsp
+TM, die $L=\{0^{2^n}\mid n\in\N_0\}$ erkennt.
+
+-   $Q=\{q_1,q_2,q_3,q_4,q_5,q_\text{accept},q_\text{reject}\}$
+-   $\Sigma=\{0\}$
+-   $\Gamma=\{0,x,\text\textvisiblespace\}$
+-   $\delta=\text{tja?}$
+:::
+
+::: defi
+Eine *Konfiguration* der TM $M$ wird beschrieben durch den Inhalt des
+Bandes, die Position des Lesekopfes und den derzeitigen Zustand
+$q\in Q$: $$uqv$$
+
+-   Inhalt des Speicherbandes ist String $uv$
+-   Position des Schreibkopfes ist direkt nach $u$, auf dem ersten
+    Buchstaben von $v$
+-   Zustand ist $q$
+
+Außerdem:
+
+-   Die *Startkonfiguration* von $M$ auf Eingabe $w$ ist $q_0w$
+-   Eine Konfiguration heißt *akzeptierend/verwerfend*, wenn der Zustand
+    $q_\text{accept}$/$q_\text{reject}$ ist
+:::
+
+::: defi
+Eine *Berechnung* der TM $M$ auf Eingabe $w$ ist eine gültige Folge von
+Konfigurationen $C_0,C_1,C_2,...$, sodass $C_0$ die Startkonfiguration
+ist und die Konfiguration $C_{i+1}$ jeweils in der Übergangsfunktion
+beschrieben aus $C_i$ hervorgeht.
+
+Eine Berechnung einer TM auf Eingabe $w$ heißt
+*akzeptierend/verwerfend*, falls sie im Zustand
+$q_\text{accept}$/$q_\text{reject}$ endet.
+
+Eine Berechnung heißt *nicht-akzeptierend*, falls sie entweder in
+$q_\text{reject}$ endet oder *nie beendet wird*.
+:::
+
+::: defi
+Eine Sprache $L$ heißt *rekursiv aufzählbar (semi-entscheidbar)*, falls
+es eine TM $M$ gibt, die $L$ akzeptiert. Das heißt:
+
+-   $w\in L\implies M\text{ akzeptiert }w$
+-   $w\notin L\implies M\text{ verwirft oder hält nicht an}$
+:::
+
+::: defi
+Eine Sprache $L$ heißt *(rekursiv) entscheidbar*, falls es eine TM $M$
+gibt, sodass gilt:
+
+-   $w\in L\implies M\text{ akzeptiert }w$
+-   $w\notin L\implies M\text{ verwirft }w$
+
+**$M$ hält immer an.**
+:::
+
+## Varianten
+
+::: defi
+Zwei Turing-Machinen $M_1$, $M_2$ heißen *äquivalent*, falls sie die
+gleichen Sprachen akzeptieren: $L(M_1)=L(M_2)$.
+`\begin{align*} M_1\text{ akzeptiert }w&\implies M_2\text{ akzeptiert }w\\ M_1\text{ akzeptiert }w\text{ nicht}&\implies M_2\text{ akzeptiert }w\text{ nicht} \end{align*}`{=tex}
+:::
+
+::: defi
+Wir können wie bei endlichen Automaten eine *nicht-deterministische
+Turingmaschine (NTM)* definieren:
+
+-   Zu jedem Zeitpunkt hat die TM mehrere Möglichkeiten, wie sie
+    fortfahren kann
+-   Formal geht dann die Übergangsfunktion
+    $$\delta:Q\times\Gamma\to\pot(Q\times\Gamma\times\{L,R\})$$
+:::
+
+::: defi
+Eine *Berechnung* der NTM entspricht einem möglichen Pfad im "Baum der
+möglichen Berechnungen".
+
+Eine Berechnung heißt *akzeptierend/verwerfend*, falls sie in einem
+*akzeptierenden/verwerfenden* Zustand endet.
+
+Die von der NTM *akzeptierte Sprache* besteht aus den Wörtern, für die
+es eine akzeptierende Berechnung gibt: Mindestens einer der Pfade im
+Berechnungsbaum endet im akzeptierenden Zustand.
+:::
+
+::: bem
+-   bei DTMs: nicht akzeptierend $\iff$ verwerfen oder nicht terminieren
+-   bei NTMs: nicht akzeptierend
+    $\iff \forall\text{Pfade: Pfad verwirft oder endet nicht}$
+:::
+
+::: satz
+$$\text{DTM }\underbrace{\equiv}_{\mathclap{\text{berechenbarkeitsäquivalent}}}\text{ NTM}$$
+
+::: proof
+Breitensuche im Berechnungsbaum. Blabla offensichtlich.
+:::
+:::
+
+# Entscheidbarkeit von Sprachen vs. Berechenbarkeit von Funktionen
+
+::: defi
+Eine Funktion $f:\Sigma^*\to\Gamma^*$ heißt *(Turing)-berechenbar* oder
+*totalrekursiv*, falls es eine TM gibt, die bei Eingabe von
+$w\in\Sigma^*$ den Funktionswert $f(w)$ ausgibt (und insbesondere
+anhält).
+:::
+
+::: satz
+Eine Sprache $L\subset\Sigma^*$ ist genau dann *entscheidbar*, wenn ihre
+charakteristische Funktion
+$$\mathbb1_L:\Sigma^*\to\{0,1\},\mathbb1_L(w)=\begin{cases}1&w\in L\\0&\text{sonst}\end{cases}$$
+*berechenbar* ist.
+
+::: proof
+-   $L\text{ entscheidbar}\implies\mathbb1_L\text{ berechenbar}$
+    -   TM $M$, die $w$ genau dann akzeptiert, wenn $w\in L$. Erweitern
+        zu $\hat M$:
+        -   falls $M$ akzeptiert, schreibe 1 auf Band und lösche alles
+            andere
+        -   falls $M$ verwirft, schreibe 0 aufs Band
+-   $\mathbb1_L\text{ berechenbar}\implies L\text{ entscheidbar}$
+    -   $\hat M$ berechnet $\mathbb1_L$
+        -   TM gibt 1 $\implies$ akzeptierender Zustand
+        -   TM gibt 0 $\implies$ verwerfender Zustand `\qed`{=tex}
+:::
+:::
+
+::: satz
+Eine Funktion $f:\Sigma^*\to\Gamma^*$ ist *berechenbar* genau dann, wenn
+es eine TM gibt, die die folgende Sprache *entscheidet*:
+$$L_f=\{w\#g\mid w\in\Sigma^*,g\in\Gamma^*,f(w)=g\}$$
+
+::: proof
+-   $f:\Sigma^*\to\Gamma^*\text{ berechenbar}\implies L_f\text{ entscheidet}$
+    -   TM $M_1$ berechnet bei $w\in\Sigma^*$ Ausgabe von $f(w)$
+    -   TM $M_2$ bekommt $w\#g$ und ruft $M_1$ mit $w$ auf
+    -   $M_2$ wartet auf Ergebnis $g_1$ von $M_1$
+    -   $M_2$ vergleicht $g_1$ mit $g$
+-   $L_f\text{ entscheidet}\implies f:\Sigma^*\to\Gamma^*\text{ berechenbar}$
+    -   TM $M_2$ entscheidet $L_f$
+    -   TM $M_1$ bekommt $w$
+    -   $M_1$ probiert *alle* Antworten von $f(w)$ aus bis die richtige
+        Antwort gefunden wurde
+    -   sobald $L_f$ akzeptiert, weiß $M_1$ die Antwort `\qed`{=tex}
+:::
+:::
+
+## Gödelnummer
+
+::: motiv
+Programmierbare Turingmaschinen?
+
+$\implies$ binäre Kodierung für TM?!
+:::
+
+::: bsp
+Eine beispielhafte Kodierung einer TM
+$M=(Q,\Sigma,\Gamma,\delta,q_0,q_\text{accept},q_\text{reject})$ mit
+$\{0,1,\#\}$:
+
+-   $\Gamma=\{A_1,...,A_r\}$: $C(A_j)=10^j1$
+-   $Q=\{q_1,...,q_m\}$: $C(q_i)=110^i11$
+-   $C(L)=1110111$ und $C(R)=11100111$
+-   $C(\delta(q,a)=(\hat q,\hat a,B))=\#C(q)C(a)C(\hat q)C(\hat a)C(B)\#$
+
+$\implies C(M)=\#0^m\#0^r\#C(t_1)\#C(t_2)\#...$ mit Transitionen $t_i$,
+$m=|Q|$ und $r=|\Gamma|$.
+
+Ein reiner binärer String lässt sich durch
+$0\mapsto00,1\mapsto11,\#\mapsto01$ bilden.
+
+::: bem
+Die Kodierung ist
+
+-   injektiv: $C(M_1)=C(M_2)\implies M_1=M_2$.
+-   *präfixfrei*
+:::
+:::
+
+::: satz
+Es gibt eine TM $A_\text{true}$, die für einen binären String $w$
+entscheidet, ob er eine gültige Kodierung einer TM ist.
+:::
+
+::: defi
+Seien $x,y\in\{0,1\}^+$ zwei binäre Strings. $x\le y$ falls $n_x,n_y$
+die durch die Strings repräsentiert werden, $n_x\le n_y$ repräsentieren.
+
+Für $x=\varepsilon,y\in\{0,1\}^*$ gelte immer $\varepsilon\le y$.
+
+::: bem
+Erfüllt die Bedingungen einer *totalen Ordnung*: Transitiv,
+anti-symmetrisch und total.
+:::
+:::
+
+::: defi
+Sei $x\in\{0,1\}^*$. Für $i\in\N$ nennt man $x$ die Kodierung der
+*$i$-ten Turingmaschine*, falls gilt:
+
+-   $x=C(M)$ für eine TM $M$
+-   $\{y\in\{0,1\}^*\mid y\le x\}$ enthält genau $i-1$ Wörter, die
+    Kodierungen von Turingmaschinen sind.
+:::
+
+::: satz
+Es gibt eine TM $A$, die für ein $i\in\N$ die Kodierung der $i$-ten TM
+berechnet.
+:::
+
+::: defi
+**Informell**: Die natürliche Zahl (der binäre String), der eine
+Turingmaschine beschreibt, heißt die *Gödelnummer der TM*. Schreibweise
+$\langle M\rangle$.
+
+**Formell**: Sei $\mathcal M$ die Menge aller Turingmaschinen. Die
+*Gödelisierung* sei $g:\mathcal M\to\N$, falls gilt:
+
+-   $g$ ist injektiv
+-   $g(\mathcal M)$ ist entscheidbar (TM konstruierbar, die für jedes
+    $n\in\N$ entscheidet, ob $n\in G(\mathcal M) gilt$)
+-   $g:\mathcal M\to N$ und $g^{-1}:g(\mathcal M)\to\mathcal M$ sind
+    berechenbar
+
+$g(M)$ heißt für $M\in\mathcal M$ die *Gödelnummer* von $M$.
+:::
+
+## Die universelle Turingmaschine
+
+::: motiv
+Turingmaschinen können bis jetzt nur genau ein Programm ausführen, aber
+wir wollen mehr!! :((
+:::
+
+::: bsp
+Eine Möglichkeit ist eine *3-Band-TM*:
+
+-   Auf Band 1 wird $M$ simuliert
+-   Auf Band 2 wird die Gödelnummer $\langle M\rangle$ geschrieben
+-   Auf Band 3 wird der aktuelle Zustand von $M$ vermerkt
+
+Vorbereitung:
+
+-   $U$ liest $\langle M\rangle w$ auf Band 1 und teilt sie in
+    $\langle M\rangle$ und $w$ auf
+    -   bricht ab, falls $\langle M\rangle$ keine korrekte Kodierung ist
+-   $U$ kopiert $\langle M\rangle$ auf Band 2 und löscht sie von Band 1
+-   $U$ schreibt die Kodierung des Startzustandes von $M$ auf Band 3
+
+Simulation:
+
+-   $U$ weiß mittels Band 3 den aktuellen Zustand
+-   $U$ liest den aktuellen Buchstaben von Band 1
+-   $U$ sucht auf Band 2 den zugehörigen Übergang
+-   $U$ führt Übergang auf Band 1 durch und merkt sich den neuen Zustand
+    in Band 3
+
+Ausgabe:
+
+-   $U$ stoppt, sobald Band 3 den akzeptierenden/verwerfenden Zustand
+    erreicht
+-   Band 1 enthält die Ausgabe der Berechnung
+:::
+
+## Abzählbar unendliche Mengen
+
+::: motiv
+Es gibt **viel** mehr Sprachen als Turingmaschinen $\implies$ es gibt
+Sprachen, die nicht von TMs erkannt werden können.
+:::
+
+::: defi
+Eine Menge $M\ne\emptyset$ heißt *endlich*, falls es ein $n_0\in\N$
+gibt, für das es eine bijektive Abbildung $$g:\{1,2,...,n_0\}\to M$$
+gibt. Andernfalls heißt $M$ *unendlich*.
+
+Im endlichen Fall bezeichnet man mit $|M|\defeq n_0$ die
+*Kardinalität*/*Mächtigkeit* der Menge.
+:::
+
+::: defi
+Zwei Mengen $M_1,M_2$ heißen *gleich mächtig*, falls es eine bijektive
+Abbildung $M_1\to M_2$ gibt.
+
+$M_2$ heißt *mächtiger als* $M_1$, falls es eine injektive Abbildung
+$f:M_1\to M_2$ und keine injektive Abbildung $g:M_2\to M_1$ gibt.
+:::
+
+::: defi
+Menge $M$ heißt *abzählbar unendlich*, wenn sie gleich mächtig wie $\N$
+ist (es existiert Bijektion $f:M\to\N$).
+
+Menge $M$ heißt *höchstens abzählbar*, wenn sie endlich oder abzählbar
+unendlich ist.
+
+Eine Menge, die weder endlich noch abzählbar ist, heißt *überabzählbar*.
+:::
+
+::: bem
+Menge $\N$ ist unendlich und abzählbar:
+$$f:\N\to\N,n\mapsto n\text{ bijektiv}$$
+:::
+
+### Spaß mit Abzählbarkeit
+
+::: motiv
+Oh nein mein Hotel hat unendlich viele Zimmer und alle sind besetzt!
+
+Jetzt kommt noch ein Gast aber wo soll der hin??
+
+Dann kommt noch ein Bus mit abzählbar vielen Leuten -- was soll ich
+tun??!?
+:::
+
+::: bsp
+-   $\Z$ ist abzählbar mit folgender Bijektion:
+
+      $\N$    1   2   3    4   5    6   7
+      ------ --- --- ---- --- ---- --- ----
+      $\Z$    0   1   -1   2   -2   3   -3
+
+-   $\N^2$ ist abzählbar mit cooler zickidizickzack Bijektion
+
+-   $\Q$ ist abzählbar mit noch coolerer zickidizickzack Bijektion
+:::
+
+::: satz
+Eine Menge ist genau dann unendlich, wenn es eine echte Teilmenge
+$U\subset M,M\ne M$ und eine injektive Abbildung $f:M\to U$ gibt.
+:::
+
+::: satz
+Sei $M$ eine beliebige unendliche Menge. Dann ist $\N$ nicht mächtiger
+als $M$.
+:::
+
+::: satz
+-   Sei $A$ höchstens abzählbar, $f:A\to B$ bijektiv. Dann ist auch $B$
+    höchstens abzählbar.
+
+-   $M$ abzählbar, $N\subset M$. Dann ist $N$ endlich oder abzählbar.
+
+-   Seien $M_1,M_2,...$ abzählbare Mengen. Dann ist
+    $\bigcup_{i\in\N}M_i$ auch abzählbar.
+
+-   Endliche Produkte von abzählbaren Mengen sind abzählbar:
+    $M_1,M_2,...,M_n$ abzählbar. Dann $M_1\times M_2\times...\times M_n$
+    abzählbar
+
+    ::: bem
+    Gilt nicht für unendliche Produkte! Bspw. $2^\N$ ist überabzählbar.
+    :::
+:::
+
+## Wie groß ist $\Sigma^*$?
+
+::: satz
+$\Sigma^*$ ist unendlich.
+
+::: proof
+-   $\Sigma$ enthält mindestens einen Buchstaben: $a\in\Sigma$
+-   $\Sigma^*$ enthält demnach $a,a^2,a^3,...$
+-   Also existiert injektive Abbildung $f:\N\to\Sigma^*,f(u)=a^i$, also
+    muss $\Sigma^*$ unendlich groß sein `\qed`{=tex}
+:::
+:::
+
+::: satz
+$\Sigma^*$ ist abzählbar unendlich.
+
+::: proof
+Bijektive Abbildung $f:\N\to\Sigma^*$:
+$$\Sigma^*=\{\text{Wörter mit Länge 0}\}\cup\{\text{Wörter mit Länge 1}\}\cup...$$
+
+-   $f$ ist wohldefiniert: Jedes $n\in\N$ erhält genau ein Bildwort
+    $f(n)\in\Sigma^*$ (klar)
+-   Surjektiv: Jedes Wort von $\Sigma^*$ kriegt mindestens eine Nummer
+    (klar)
+-   Injektiv: Jedes Wort von $\Sigma^*$ kriegt genau eine Nummer (klar)
+    `\qed`{=tex}
+:::
+:::
+
+::: satz
+Sei $L$ eine Sprache über einem endlichen Alphabet. Dann ist $L$
+höchstens abzählbar.
+:::
+
+::: satz
+Die Menge aller Turingmaschinen ist abzählbar.
+
+::: proof
+TM $M$ kann eindeutig durch GM $\langle M\rangle\in\{0,1\}^*$
+beschrieben werden und $\{0,1\}^*$ ist abzählbar. `\qed`{=tex}
+:::
+:::
+
+## Überabzählbare Mengen
+
+::: satz
+Die Menge der reelen Zahlen ist überabzählbar.
+
+::: proof
+Über Cantorsches Diagonalisierungsverfahren. Trivial.
+:::
+:::
+
+::: bem
+-   $\N$ abzählbar
+-   $\Q$ abzählbar
+-   $\R$ überabzählbar
+:::
+
+### $2^\N$ ist überabzählbar
+
+::: satz
+Die Menge
+$2^\N\defeq\{0,1\}^\N\defeq\{(a_i)_{i\in\N}\mid a_i\in\{0,1\}\}$ ist
+überabzählbar.
+
+::: proof
+Widerspruchsbeweis mit Cantor. Trivial.
+:::
+:::
+
+::: bem
+$2^\N$ und $[0,1]\subset\R$ haben Gemeinsamkeiten:
+
+-   Zahlen aus $[0,1]$ als Binärfolge darstellbar
+-   Erzeugt Bijektion zwischen $2^\N$ und $[0,1]$ (außer periodische 1)
 :::
