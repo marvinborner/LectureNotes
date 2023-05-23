@@ -18,10 +18,6 @@ pandoc-latex-environment:
 toc-title: Inhalt
 ---
 
-```{=tex}
-\newpage
-\renewcommand\O{\mathcal{O}} % IDK WHY
-```
 # Reguläre Sprachen und endliche Automaten
 
 ::: motiv
@@ -228,16 +224,16 @@ Die Menge aller regulären Sprachen ist *REG*.
 
 ::: satz
 Sei $L$ eine reguläre Sprache über $\Sigma$. Dann ist auch
-$\bar{L}\defeq\Sigma^*\setminus L$ eine reguläre Sprache.
+$\overline{L}\defeq\Sigma^*\setminus L$ eine reguläre Sprache.
 
 ::: proof
 -   $L$ regulär $\implies$ es gibt Automaten
     $M=(Q,\Sigma,\delta,q_0,F)$, der $L$ akzeptiert
 -   Definiere "Komplementautomat"
-    $\bar{M}=(Q,\Sigma,\delta,q_0,\bar{F})$ mit
-    $\bar{F}\defeq Q\setminus F$.
+    $\overline{M}=(Q,\Sigma,\delta,q_0,\overline{F})$ mit
+    $\overline{F}\defeq Q\setminus F$.
 -   Dann gilt:
-    `\begin{align*} w\in\bar{L}&\iff M\text{ akzeptiert }w\text{ nicht}\\ &\iff \bar{M}\text{ akzeptiert }w. \end{align*}\qed`{=tex}
+    `\begin{align*} w\in\overline{L}&\iff M\text{ akzeptiert }w\text{ nicht}\\ &\iff \overline{M}\text{ akzeptiert }w. \end{align*}\qed`{=tex}
 :::
 :::
 
@@ -320,7 +316,7 @@ $L_1\setminus L_2$ reguläre Sprachen.
 -   $L_1\cap L_2$: Beweis funktioniert analog wie für $L_1\cup L_2$, nur
     mit
     $$F\defeq\{(q_1,q_2)\mid q_1\in F_1\text{\textbf{ und }}q_2\in F_2\}.$$
--   $L_1\setminus L_2=L_q\cap\bar{L_2}$
+-   $L_1\setminus L_2=L_q\cap\overline{L_2}$
 
 `\qed`{=tex}
 :::
@@ -552,7 +548,7 @@ Strukturelle Induktion. Tja.
 :::
 :::
 
-# Pumping-Lemma
+## Pumping-Lemma
 
 ::: motiv
 Frage: Gibt es Sprachen, die nicht regulär sind?
@@ -635,7 +631,7 @@ erkannt werden.
 :::
 
 ::: bsp
-$$L=\{a^nb^nc^n\mid n\in\N\}$$, kann von einem Kellerautomaten *nicht*
+$$L=\{a^nb^nc^n\mid n\in\N\}$$ kann von einem Kellerautomaten *nicht*
 erkannt werden.
 :::
 
@@ -1100,7 +1096,7 @@ höchstens abzählbar.
 Die Menge aller Turingmaschinen ist abzählbar.
 
 ::: proof
-TM $M$ kann eindeutig durch GM $\langle M\rangle\in\{0,1\}^*$
+TM $M$ kann eindeutig durch GN $\langle M\rangle\in\{0,1\}^*$
 beschrieben werden und $\{0,1\}^*$ ist abzählbar. `\qed`{=tex}
 :::
 :::
@@ -1138,4 +1134,363 @@ $2^\N$ und $[0,1]\subset\R$ haben Gemeinsamkeiten:
 
 -   Zahlen aus $[0,1]$ als Binärfolge darstellbar
 -   Erzeugt Bijektion zwischen $2^\N$ und $[0,1]$ (außer periodische 1)
+:::
+
+### Indikatorfunktion einer abzählbaren Menge
+
+TODO
+
+### Mächtigkeit von Potenzmengen
+
+TODO
+
+### Russels Paradox
+
+TODO
+
+## Sprachen, die nicht semi-entscheidbar sind
+
+::: satz
+Betrachte das Alphabet $\Sigma=\{0,1\}$. Es gibt Sprachen $L$ über
+$\Sigma$, die nicht rekursiv aufzählbar sind.
+
+::: proof
+-   Die Menge aller TM/GN ist ist abzählbar unendlich
+-   Ergo ist die Menge aller Sprachen, die von einer TM entschieden
+    werden, auch höchstens abzählbar
+-   Die Menge aller Sprachen über $\{0,1\}$ ist überabzählbar
+-   Ergo muss es Sprachen geben, die nicht von einer TM entschieden
+    werden können `\qed`{=tex}
+:::
+:::
+
+::: motiv
+Existenz ist schön und gut, aber können wir tatsächlich eine
+$D\notin\text{RE}$ konstruieren?
+:::
+
+### Diagonalsprache
+
+::: defi
+-   Seien $w_1,w_2,w_3,...$ alle Wörter über $\Sigma=\{0,1\}$ (abzählbar
+    viele)
+
+-   Seien $M_1,M_2,M_3,...$ alle TM (abzählbar viele) TODO: autoformat
+
+          /        $w_1$      $w_2$      $w_3$       ...
+      ---------- ---------- ---------- ---------- ----------
+        $M_1$     $d_{11}$   $d_{12}$   $d_{13}$     ...
+        $M_2$     $d_{21}$   $d_{22}$   $d_{23}$     ...
+        $M_3$     $d_{31}$   $d_{32}$   $d_{33}$     ...
+       $\vdots$   $\vdots$   $\vdots$   $\vdots$   $\ddots$
+
+:::
+
+::: bsp
+      /        $w_1$      $w_2$      $w_3$       ...
+  ---------- ---------- ---------- ---------- ----------
+    $M_1$        1          0          0         ...
+    $M_2$        0          1          0         ...
+    $M_3$        1          1          0         ...
+   $\vdots$   $\vdots$   $\vdots$   $\vdots$   $\ddots$
+
+Diagonalsprache $D=\{w_i\mid d_{ii}=0\}$:
+
+-   Enthält das Wort $w_3$
+-   Enthält nicht die Wörter $w_1,w_2$
+
+Es gibt keine TM, die $D$ erkennt:
+
+-   $D$ wird nicht von $M_1$ erkannt
+    -   $M_1$ akzeptiert $w_1$. Aber da $d_{11}=1$ ist $w_1\notin D$
+-   $D$ wird nicht von $M_2$ erkannt (analog)
+-   $D$ wird nicht von $M_3$ erkannt
+    -   $M_3$ akzeptiert $w_3$ nicht, da $d{33}=0$. Also würde $M_3$ ein
+        Wort aus $D$ nicht akzeptieren
+-   usw.
+:::
+
+::: satz
+$D\in\text{RE}$: Die Diagonalsprache ist nicht rekursiv aufzählbar.
+:::
+
+### Game of Life
+
+::: defi
+-   Jede schwarze Zelle mit 2/3 schwarzen Nachbarn bleibt schwarz, alle
+    anderen schwarzen Zellen werden weiß
+-   Jede weiße Zelle mit drei schwarzen Nachbarn wird schwarz, die
+    anderen weißen Zellen werden weiß
+:::
+
+::: satz
+Das Problem, von einer Startkonfiguration eine bestimmte
+Zielkonfiguration zu erreichen, ist unentscheidbar.
+:::
+
+## Sprachen, die semi-entscheidbar, aber nicht entscheidbar sind
+
+::: defi
+$$A_\text{TM}=\{\langle M,w\rangle\mid M\text{ist Code einer TM und $w$ wird von $M$ akzeptiert}\}\subset\{0,1\}^*$$
+mit $\langle M,w\rangle$ Wort, welches die GN der TM $M$ mit $w$
+konkateniert.
+:::
+
+::: satz
+$A_\text{TM}$ ist semi-entscheidbar: $$A_\text{TM}\in\text{RE}$$
+:::
+
+::: satz
+$A_\text{TM}$ ist nicht entscheidbar: $$A_\text{TM}\notin\text R$$
+:::
+
+### Komplementbildung
+
+::: defi
+Sei $L\in\mathcal L$ eine Sprache über $\Sigma$. Die
+*Komplement-Sprache* $L^C$ ist definiert als
+$$L^C\defeq\{w\in\Sigma^*\mid w\notin L\}.$$ Manchmal auch Notation
+$\overline L$ statt $L^C$.
+:::
+
+::: satz
+$L\in\text R\implies L^C\notin\text R$.
+:::
+
+::: defi
+Die Menge *coRE* ist definiert als
+$$\text{coRE}\defeq\{L\mid L^C\in\text{RE}\}.$$ Oder anders
+aufgeschrieben: $$L\in\text{coRE}\defiff L^C\in\text{RE}.$$
+:::
+
+::: satz
+$L\in\text R\iff L\in\text{RE}\land L\in\text{coRE}$
+
+::: proof
+-   $L\in\text R\implies L\in\text{RE}\land L\in\text{coRE}$:
+    -   $L\in\text R\implies L\in\text{RE}$ klar, da
+        $\text R\subset\text{RE}$
+    -   Außerdem wie zuvor:
+        $L\in\text R\implies L^C\in\text R\subset\text{RE}.$
+-   $L\in\text{RE}\land L\in\text{coRE}\implies L\in\text R$
+    -   sei $M$ TM für $L$ und $M_C$ TM für $L^C$. Neue TM $\hat M$:
+        -   $M$ und $M_C$ parallel auf $w$ laufen lassen
+        -   falls $M$ akzeptiert, soll $\hat M$ akzeptieren
+        -   falls $M_C$ akzeptiert, soll $\hat M$ verwerfen
+    -   dann:
+        $w\in L\implies M\text{ akzeptiert}\implies\hat M\text{ akzeptiert}$
+    -   sowie:
+        $w\notin L\implies w\in L^C\implies M_C\text{ akzeptiert}\implies\hat M\text{ verwirft}$
+        `\qed`{=tex}
+:::
+:::
+
+::: satz
+$L\in\text{RE}\not\implies L^C\in\text{RE}$
+:::
+
+::: motiv
+Also gibt es nun weitere Sprachen $\notin\text{RE}$?
+:::
+
+::: satz
+$\overline{A_\text{TM}}\notin\text{RE}.$
+
+::: proof
+Bereits bewiesen:
+$L\in\text{RE}\land L\in\text{coRE}\implies L\in\text R$.
+
+Wissen außerdem, dass $A_\text{TM}\in\text{RE}$ und
+$A_\text{TM}\notin\text R$. Also muss $A_\text{TM}\notin\text{coRE}$
+sein. `\qed`{=tex}
+:::
+:::
+
+TODO: Bildchen wichtig für Klausur. TODO: Bar.
+
+## Abbildungs-Reduktionen in der Berechenbarkeitstheorie
+
+::: motiv
+Wir wollen $P_1$ lösen, indem wir es auf ein anderes Problem $P_2$
+reduzieren
+
+-   Falls $P_2$ "leicht" ist, dann ist auch $P_1$ "leicht"
+-   Falls $P_1$ "schwer" ist, dann ist auch $P_2$ "schwer"
+:::
+
+::: defi
+Sprache $L_1\subset\Sigma_1^*$ ist auf Sprache $L_2\subset\Sigma_2^*$
+*Abbildungs-reduzierbar*, falls gilt:
+
+Es gibt eine Turing-berechenbare Funktion $f:\Sigma_1^*\to\Sigma_2^*$,
+sodass für alle $w\in\Sigma_1^*$ gilt: $$w\in L_1\iff f(w)\in L_2.$$ Die
+Funktion $f$ heißt *Reduktion von $L_1$ auf $L_2$*.
+
+Schreibweise: $L_1\preccurlyeq_m L_2$, wobei das $m$ oft für "mapping
+reduction" steht.
+:::
+
+::: bsp
+TODO: Graphen
+
+-   Problem $k$-Clique: Gegeben ein ungerichteter Graph $G=(V,E)$ und
+    $k\in\N$. Eine Teilmenge $V'\subset V$ heißt *Clique*, falls $V'$ im
+    Graph vollständig verbunden ist. Gibt es eine Clique der Größe $k$
+    in $G$?
+-   Problem $k$-Vertex-Cover: Gegeben ein ungerichteter Graph $G=(V,E)$
+    und $k\in\N$. Eine Teilmenge $V'\subset V$ heißt *Vertex Cover*,
+    falls jede Kante des Graphen mindestens einen Endpunkt in $V'$ hat.
+    Gibt es im Graphen ein Vertex Cover mit $k$ Knoten?`\bigskip`{=tex}
+
+*Reduktion von Clique auf Vertex Cover*. Gegeben: Graph $G$, $k\in\N$.
+Auf $G$ wollen wir $k$-Clique lösen, indem wir Graphen $\hat G$ bauen
+und $\hat k\in\N$ so wählen, dass gilt:
+$$G\text{ hat $k$-Clique}\iff\hat G\text{ hat $\hat k$-Vertex-Cover}.$$
+Dazu wählen wir $\hat G$ als das "Komplement" von $G$:
+
+-   $\hat G$ hat die gleichen Knoten wie $G$
+-   $\hat G$ hat Kante $uv$ genau dann, wenn $G$ diese Kante **nicht**
+    hat.
+
+Außerdem setzen wir $\hat k\defeq|V|-k$.
+
+::: satz
+Diese Reduktion ist berechenbar.
+
+::: proof
+Die Reduktion $f$ transformiert den Graphen $G$ in den Graphen $\hat G$.
+Man kann dann eine TM konstruieren, die bei Eingabe von $G$ und $k$ die
+Ausgabe $\hat G$ und $\hat k$ produziert.`\qed`{=tex}
+:::
+:::
+
+::: satz
+$G$ hat eine Clique der Größe $k$ genau dann, wenn $\hat G$ einen Vertex
+Cover der Größe $\underbrace{n-k}_{\defeq\hat k}$ besitzt (wobei $n=|V|$
+ist).
+
+::: proof
+TODO?
+:::
+:::
+:::
+
+::: satz
+Falls $L_1\preccurlyeq L_2$, dann gilt:
+
+1.  Falls $L_2$ (semi-)entscheidbar ist, dann ist auch $L_1$
+    (semi-)entscheidbar.
+2.  Falls $L_1$ nicht (semi-)entscheidbar ist, dann ist auch $L_2$ nicht
+    (semi-)entscheidbar.
+
+::: proof
+TODO: Bildchen hihi
+
+1.  Beweis
+    -   Sei $L_2$ (semi-)entscheidbar, d.h. es gibt eine TM $M_2$, die
+        die Sprache (semi-)entscheidet.
+    -   Nun baut man TM $M_1$, die $L_1$ (semi-)entscheidet: Bei der
+        Eingabe von $w$ wendet $M_1$ zunächst die TM $F$ an, die die
+        Reduktion von $L_1$ auf $L_2$ realisiert. Auf die Ausgabe von
+        $F$ wird dann $M_2$ angewandt.
+2.  Beweis durch Widerspruch
+    -   Annahme: $L_2$ ist (semi-)entscheidbar
+    -   Mit Instanz von $L_1$ starten und TM $M_1$ wie zuvor
+    -   Dann (semi-)entscheidet $M_1$, aber auch $L_1$ :O
+
+`\qed`{=tex}
+:::
+
+Andere Aussagen lassen sich nicht definitiv treffen.
+:::
+
+## Das Halteproblem und viele weitere Probleme in $\mathrm{RE}\setminus\mathrm R$
+
+::: motiv
+Wir wollen eine Kette von Reduktionen zeigen:
+$$\overline{D_\mathrm{TM}}\preccurlyeq A_\mathrm{TM}\preccurlyeq H\preccurlyeq H_0\preccurlyeq K.$$
+:::
+
+### Reduktion $\overline{D_\mathrm{TM}}\preccurlyeq A_\mathrm{TM}$
+
+::: satz
+-   $\overline{D_\mathrm{TM}}=\{\langle M\rangle\mid M\text{ akzeptiert }\langle M\rangle\}$
+-   $A_\mathrm{TM}=\{\langle M,w\rangle\mid M\text{ akzeptiert }w\}$
+
+$$\overline{D_\mathrm{TM}}\preccurlyeq A_\mathrm{TM}$$
+
+::: proof
+Definiere $f(w)\defeq ww$. Ist berechenbar und offensichtlich gilt:
+$$w\in\overline{D_\mathrm{TM}}\iff M\text{ akzeptiert }\langle M\rangle\iff f(w)=ww\in A_\mathrm{TM}.$$
+`\qed`{=tex}
+:::
+:::
+
+### Reduktion $A_\mathrm{TM}\preccurlyeq H$ (allgemeines Halteproblem)
+
+::: satz
+-   $A_\mathrm{TM}=\{\langle M,w\rangle\mid M\text{ akzeptiert }w\}$
+-   $H=\{\langle M,w\rangle\mid M\text{ hält bei Eingabe $w$ an}\}$
+
+$$A_\mathrm{TM}\preccurlyeq H$$
+
+::: proof
+Mit Eingabe $\langle M,w\rangle$ baut man eine TM $\hat M$:
+
+-   $\hat M$ macht die gleichen Berechnungen wie $M$
+-   Falls $M$ in einem nicht-akzeptierenden Zustand stoppt, dann begibt
+    sich $\hat M$ in eine Endlosschleife
+-   Sei $\langle\hat M\rangle$ der Code diesr TM -- dieser Code lässt
+    sich nicht berechnen
+
+Die Reduktionsabbildung ist:
+$$f(\langle M,w\rangle)=\langle\hat M,w\rangle.$$ Dann gilt:
+$$\langle M,w\rangle\in A_\mathrm{TM}\iff M\text{ akzeptiert } w$$$$\iff\hat M\text{ stoppt bei Eingabe }w\iff\langle\hat M,w\rangle\in H$$
+`\qed`{=tex}
+:::
+:::
+
+### Reduktion $H\preccurlyeq H_0$ (spezielles Halteproblem)
+
+::: satz
+-   $H=\{\langle M,w\rangle\mid M\text{ hält bei Eingabe $w$ an}\}$
+-   $H_0=\{\langle M\rangle\mid M\text{ hält bei Eingabe $\varepsilon$ an}\}$
+
+$$H\preccurlyeq H_0$$
+
+::: proof
+TODO
+:::
+:::
+
+### Reduktion $H_0\preccurlyeq K$
+
+::: satz
+-   $H_0=\{\langle M\rangle\mid M\text{ hält bei Eingabe $\varepsilon$ an}\}$
+-   $K=\{\langle M\rangle\mid M\text{ hält bei Eingabe von $\langle M\rangle$ an}\}$
+
+$$H_0\preccurlyeq K$$
+
+::: proof
+TODO
+:::
+:::
+
+### Schlussfolgerung
+
+::: satz
+Die Sprachen $\overline{D_\mathrm{TM}},A_\mathrm{TM},H,H_0,K$ sind alle
+in $\mathrm{RE}\setminus R$.
+:::
+
+::: motiv
+-   Das Halteproblem ist relevant, um die Beendung von Programmen zu
+    zeigen -- geht nicht! :(
+-   Berechnen zwei TM das Gleich? -- geht nicht! :(
+:::
+
+::: defi
+Problem 1 $\preccurlyeq_T$ Problem 2, falls es eine TM zur Lösung von
+Problem 1 gibt, die eine Turingmaschine für Problem 2 beliebig oft als
+"Unterprogramm" aufrufen darf.
 :::
