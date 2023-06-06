@@ -1494,3 +1494,47 @@ Problem 1 $\preccurlyeq_T$ Problem 2, falls es eine TM zur Lösung von
 Problem 1 gibt, die eine Turingmaschine für Problem 2 beliebig oft als
 "Unterprogramm" aufrufen darf.
 :::
+
+# Der Satz von Rice
+
+::: motiv
+Viele Eigenschaften von Turingmaschinen/Programmen sind nicht entscheidbar. Sind diese Eigenschaften die Ausnahme?
+
+Rice sagt: Nein! So gut wie alle *interessanten* Eigenschaften von TMs sind unentscheidbar.
+
+*Interessante* Eigenschaften sind jene, die sich nur an der von ihr erkannten Sprache festmachen lassen. Dabei interessiert uns nur die Ausgabe der TM, nicht die Art der Berechnung selbst.
+:::
+
+::: defi
+Sei $L$ eine Sprache, deren Wörter nur aus Codes von TMs bestehen:
+$$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$$
+Die Sprache $L$ heißt *nicht-trivial*, falls gilt:
+
+- $L\ne\emptyset$ (es gibt TMs, deren Code in $L$ enthalten ist)
+- $L\ne\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$ (es gibt TMs, deren Code nicht in $L$ enthalten ist)
+:::
+
+::: defi
+Sei $L$ eine Sprache, deren Wörter nur aus Codes von TMs bestehen: $$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}.$$
+Die Sprache $L$ heißt *semantisch*, falls gilt:
+
+Wenn $M_1$ und $M_2$ äquivalente TMs sind, dann sind entweder beide in $L$ enthalten oder beide nicht in $L$ enhalten: $$\langle M_1\rangle\in L\iff\langle M_2\rangle\in L$$
+:::
+
+::: satz
+Jedes semantische, nichttriviale Entscheidungsproblem ist unentscheidbar. Wow!
+
+::: proof
+Siehe Vorlesung.
+:::
+:::
+
+::: bem
+Die Umkehrung des Satzes ist im Allgemeinen falsch, es gilt nur: $$\text{semantisch}\implies\text{unentscheidbar}.$$
+:::
+
+::: motiv
+Allgemeine "Verifikation" von Programmen ist unmöglich! Außerdem sind ohne Einschränkungen der TMs wichtige Eigenschaften nicht beweisbar!
+
+Wir müssen die "Sorte von Programmen" einschränken, um sie verifizieren zu können.
+:::
