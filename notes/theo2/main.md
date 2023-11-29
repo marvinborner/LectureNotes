@@ -9,6 +9,8 @@ pandoc-latex-environment:
   - bsp
   defi-box:
   - defi
+  hypo-box:
+  - hypo
   motiv-box:
   - motiv
   proof-box:
@@ -1498,31 +1500,40 @@ Problem 1 gibt, die eine Turingmaschine für Problem 2 beliebig oft als
 # Der Satz von Rice
 
 ::: motiv
-Viele Eigenschaften von Turingmaschinen/Programmen sind nicht entscheidbar. Sind diese Eigenschaften die Ausnahme?
+Viele Eigenschaften von Turingmaschinen/Programmen sind nicht
+entscheidbar. Sind diese Eigenschaften die Ausnahme?
 
-Rice sagt: Nein! So gut wie alle *interessanten* Eigenschaften von TMs sind unentscheidbar.
+Rice sagt: Nein! So gut wie alle *interessanten* Eigenschaften von TMs
+sind unentscheidbar.
 
-*Interessante* Eigenschaften sind jene, die sich nur an der von ihr erkannten Sprache festmachen lassen. Dabei interessiert uns nur die Ausgabe der TM, nicht die Art der Berechnung selbst.
+*Interessante* Eigenschaften sind jene, die sich nur an der von ihr
+erkannten Sprache festmachen lassen. Dabei interessiert uns nur die
+Ausgabe der TM, nicht die Art der Berechnung selbst.
 :::
 
 ::: defi
 Sei $L$ eine Sprache, deren Wörter nur aus Codes von TMs bestehen:
-$$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$$
-Die Sprache $L$ heißt *nicht-trivial*, falls gilt:
+$$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$$ Die Sprache
+$L$ heißt *nicht-trivial*, falls gilt:
 
-- $L\ne\emptyset$ (es gibt TMs, deren Code in $L$ enthalten ist)
-- $L\ne\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$ (es gibt TMs, deren Code nicht in $L$ enthalten ist)
+-   $L\ne\emptyset$ (es gibt TMs, deren Code in $L$ enthalten ist)
+-   $L\ne\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}$ (es gibt TMs,
+    deren Code nicht in $L$ enthalten ist)
 :::
 
 ::: defi
-Sei $L$ eine Sprache, deren Wörter nur aus Codes von TMs bestehen: $$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}.$$
-Die Sprache $L$ heißt *semantisch*, falls gilt:
+Sei $L$ eine Sprache, deren Wörter nur aus Codes von TMs bestehen:
+$$L\subset\{w\in\{0,1\}^*\mid w\text{ ist Code einer TM}\}.$$ Die
+Sprache $L$ heißt *semantisch*, falls gilt:
 
-Wenn $M_1$ und $M_2$ äquivalente TMs sind, dann sind entweder beide in $L$ enthalten oder beide nicht in $L$ enhalten: $$\langle M_1\rangle\in L\iff\langle M_2\rangle\in L$$
+Wenn $M_1$ und $M_2$ äquivalente TMs sind, dann sind entweder beide in
+$L$ enthalten oder beide nicht in $L$ enhalten:
+$$\langle M_1\rangle\in L\iff\langle M_2\rangle\in L$$
 :::
 
 ::: satz
-Jedes semantische, nichttriviale Entscheidungsproblem ist unentscheidbar. Wow!
+Jedes semantische, nichttriviale Entscheidungsproblem ist
+unentscheidbar. Wow!
 
 ::: proof
 Siehe Vorlesung.
@@ -1530,11 +1541,329 @@ Siehe Vorlesung.
 :::
 
 ::: bem
-Die Umkehrung des Satzes ist im Allgemeinen falsch, es gilt nur: $$\text{semantisch}\implies\text{unentscheidbar}.$$
+Die Umkehrung des Satzes ist im Allgemeinen falsch, es gilt nur:
+$$\text{semantisch}\implies\text{unentscheidbar}.$$
 :::
 
 ::: motiv
-Allgemeine "Verifikation" von Programmen ist unmöglich! Außerdem sind ohne Einschränkungen der TMs wichtige Eigenschaften nicht beweisbar!
+Allgemeine "Verifikation" von Programmen ist unmöglich! Außerdem sind
+ohne Einschränkungen der TMs wichtige Eigenschaften nicht beweisbar!
 
-Wir müssen die "Sorte von Programmen" einschränken, um sie verifizieren zu können.
+Wir müssen die "Sorte von Programmen" einschränken, um sie verifizieren
+zu können.
 :::
+
+# Modelle der Berechenbarkeit
+
+## Turing-Vollständigkeit und -Äquivalenz
+
+::: defi
+Sei $\mathcal F$ die Menge aller partiellen Funktionen von $\{0,1\}^*$
+nach $\{0,1\}^*$. Ein *Berechnungsmodell* ist eine Abbildung
+$$\mathcal M:\{0,1\}^*\to\mathcal F.$$ Ein *Programm* $P\in\{0,1\}^*$
+*$\mathcal M$-berechnet* eine Funktion $F\in\mathcal F$ falls
+$\mathcal M(P)=F$.
+:::
+
+::: defi
+Ein Berechnungsmodell $\mathcal M$ heißt *Turing-vollständig*, wenn es
+eine Turing-berechenbare Abbildung
+$$\mathrm{encode}_\mathcal{M}:\{0,1\}^*\to\{0,1\}^*$$ gibt, sodass
+$$\mathcal M(\mathrm{encode}(\langle M\rangle))$$ identisch zu der von
+der TM $M$ berechneten Funktion ist.
+:::
+
+::: defi
+Ein Berechnungsmodell $\mathcal M$ heißt *Turing-äquivalent*, falls
+
+-   es Turing-vollständig ist
+-   es zusätzlich eine $\mathcal M$-berechenbare Abbildung
+    $$\mathrm{decode}_\mathcal{M}:\{0,1\}^*\to\{0,1\}^*$$ gibt, sodass
+    für jedes $P\in\{0,1\}^*$ $$N=\mathrm{decode}_\mathcal{M}(P)$$ die
+    Gödelnummer einer TM ist und diese TM die gleiche Funktion wie
+    $\mathcal M(P)$ berechnet.
+:::
+
+## `while`- und `for`-Programme
+
+::: defi
+Das Alphabet von `while`:
+
+-   Variablen: $x_0,x_1,x_2,...$ (abzählbar viele)
+-   Konstanten: $0,1,2,...$ (abzählbar viele)
+-   Keywords: `while`, `do`, `end` (genau drei)
+-   Symbole $\defeq$, $\ne$, $;$, $+$, $-$, $[$, $]$ (genau sieben)
+:::
+
+::: defi
+Der Syntax von `while`:
+
+1.  Ein "einfacher Befehl" ist eine der drei folgenden Anweisungen
+    -   $x_i\defeq x_j+x_k$ (arithmetische Operation)
+    -   $x_i\defeq x_j-x_k$ (arithmetische Operation)
+    -   $x_i\defeq c$ (Wertzuweisung)
+2.  Ein `while`-Programm $P$ ist entweder ein einfacher Befehl oder hat
+    die Form
+    -   `while` ($x_0\ne0$) `do` $P_1$ `end` (Schleife)
+    -   $[P_1,P_2]$ (Hintereinanderausführung)
+:::
+
+::: defi
+Die Semantik von `while`:
+
+-   *Eingabe*: Besteht aus natürlichen Zahlen
+    $\alpha_0,...,\alpha_{s-1}\in\N$ und wird in den Variablen
+    $x_0,...,x_{s-1}$ gespeichert.
+-   *Ausgabe*: Falls das Programm anhält, dann ist die Ausgabe der
+    Inhalt der Variable $x_0$ bei Beendigung des Programms.
+-   *Variablenbelegung*: Jedes Programm darf beliebig viele, aber nur
+    endlich viele Variablen benutzen. Mit einer Funktion $l(P)$ für die
+    maximale Zahl an verwendeten Variablen, kann man die Belegung zu
+    jedem Zeitpunkt in einen Vektor schreiben.
+
+Sei $S$ die Startbelegung der Variablen. Die partielle Funktion
+$\Phi_P(S)$ besagt, welche Ausgabe ein Programm $P$ bei Eingabe $S$
+produziert.
+
+Sei $S=(\sigma_0,\sigma_1,\sigma_2,...)$ eine Variablenbelegung.
+
+Semantik *einfacher Befehle*:
+
+-   Falls $x_i\defeq x_j+x_k$, dann
+    $$\Phi_P(S)=(\sigma_0,\sigma_1,...,\sigma_{i-1},\sigma_j+\sigma_k,\sigma_{i+1},...).$$
+-   Falls $x_i\defeq x_j-x_k$, dann
+    $$\Phi_P(S)=(\sigma_0,\sigma_1,...,\sigma_{i-1},\max{\sigma_j-\sigma_k,0},\sigma_{i+1},...).$$
+-   Falls $x_i\defeq c$, dann
+    $$\Phi(S)=(\sigma_0,\sigma_1,...,\sigma_{i-1},\c,\sigma_{i+1},...).$$
+
+Semantik der *Hintereinander-Ausführung*:
+
+-   Falls $P="[P_1;P_2]"$, dann sei
+    $$\Phi_P(S)=\begin{cases}\Phi_{P_2}(\Phi_{P_1}(S))&\text{falls definiert}\\\texttt{undefined}&\text{sonst}\end{cases}$$
+    Im Folgenden bezeichnen wir mit $\Phi_P^{(r)}(S)$ die $r$-fache
+    Hintereinander-Ausführung von $P$, gestartet auf $S$.
+
+Semantik der *Schleifen*:
+
+-   Falls $P="\texttt{while }(x_i\ne0)\texttt{ do }P_1\texttt{ end}"$,
+    dann sei $r\in\N$ die kleinste Zahl, sodass entweder
+    -   $\Phi_{P_1}^{(r)}(S)$ nicht terminiert
+    -   die $i$-te Variable in $\Phi_{P_1}^{(r)}(S)$ gleich $0$ ist
+        *(Schleifenabbruch-Bedingung erreicht)*. Dann setzen wir
+        $$\Phi_P(S)=\begin{cases}\Phi_{P_1}^{(r)}(S)&\text{falls das Programm geendet hat}\\\texttt{undefined}&\text{sonst}\end{cases}$$
+:::
+
+::: satz
+Für jedes `while`-Programm $P$ ist $Q_P$ wohldefiniert.
+
+::: proof
+Durch strukturelle Induktion.
+:::
+:::
+
+::: bem
+Durch *Syntaktischen Zucker* könnte man auch Stacks, Arrays,
+`if`-Abfragen oder `for`-Schleifen darstellen.
+:::
+
+::: defi
+-   Ein `for`-Programm hat den (endlichen) `for` Befehl statt `while`
+-   Ein `goto`-Programm hat den `goto` Befehl statt `while`
+:::
+
+::: satz
+`for`-Programme (wie definiert) terminieren immer.
+
+::: proof
+Durch strukturelle Induktion.
+:::
+:::
+
+::: satz
+`for`-Programme können durch `while`-Programme simuliert werden.
+:::
+
+::: satz
+`while`-Programme können durch `goto`-Programme simuliert werden.
+:::
+
+::: satz
+`goto`-Programme können durch `while`-Programme (mit höchstens einer
+Schleife) simuliert werden ($\texttt{goto}\preccurlyeq\texttt{while}$).
+:::
+
+### `while`- vs. Turing-Berechenbarkeit
+
+::: satz
+`while`-Programme sind Turing-äquivalent.
+
+::: proof
+-   $\texttt{while}\preccurlyeq\text{Turing}$
+-   $\text{Turing}\preccurlyeq\texttt{while}$
+
+Siehe Vorlesung, aber eigentlich trivial.`\qed`{=tex}
+:::
+:::
+
+## Primitiv rekursive Funktionen und $\mu$-rekursive Funktionen
+
+::: motiv
+Mathematisch motiviertes Berechnungsmodell, noch vor Turingmaschine
+entwickelt.
+:::
+
+::: defi
+Die Menge der *primitiv rekursiven* Funktionen wird induktiv
+defininiert:
+
+**Induktionsanfang**:
+
+-   Die *Konstant*, $0$-stellige Funktion $0$ ist primitiv rekursiv.
+-   Die *Nachfolgerfunktion* $s:\N\to\N,s(k)=k+1$ ist primitiv rekursiv.
+-   Die *Projektionsfunktionen* der Form
+    $$f_i:\N^k\to\N,(x_1,x_2,...,x_k)\to x_i$$ (für $i=1,...,k$) sind
+    primitiv rekursiv.
+
+**Induktionsschritt**:
+
+-   Die *Komposition* von primitiv rekursiven Funktionen ist primitiv
+    rekursiv: Seien $f:\N^k\to\N$, $g_1,...,g_k:\N^m\to\N$ primitiv
+    rekursiv, dann auch
+    $$h(x_1,...,x_m)\defeq f(g_1(x_i,...,x_m),...,g_k(x_1,...,x_m)).$$
+-   *Primitive Rekursion*: Seien $g:\N^k\to\N$, $h:\N^{k+1}\to\N$
+    primitiv rekursiv. Dann ist auch die Funktion $f:\N^{k+1}\to\N$
+    primitiv rekursiv:
+    `\begin{align*}f(0,x_1.,,,.x_k)&=g(x_1,...,x_k)\\f(s(n),x_1,...,x_k)&=h(f(n,x_1,...,x_k),x_1,...,x_k)\end{align*}`{=tex}
+:::
+
+::: bsp
+Addition $\texttt{add}:\N^2\to\N$ ist primitiv rekursiv.
+
+`\begin{align*}\texttt{add}(0,x)&=x\\\texttt{add}(s(n),x)&=s(\texttt{add}(n,x))\end{align*}`{=tex}
+:::
+
+::: motiv
+Die Rekursion ist so etwas wie eine `for`-Schleife: Initialisierung:
+$$f(0,x_1,...,x_k)=g(x_1,...,x_k)$$ Ein Schritt der `for`-Schleife:
+$$f(n+1,x_1,...,x_k)=h(f(n,x_1,...,x_k),x_1,...,x_k)$$
+:::
+
+::: satz
+Die Menge der primitiv rekursiven Funktionen stimmt genau mit der Menge
+der `for`-berechenbaren Funktionen überein.
+
+::: proof
+Siehe Vorlesung. `\qed`{=tex}
+:::
+:::
+
+::: motiv
+`for`-Berechenbarkeit ist nicht Turing-äquivalent.
+
+Gibt es einen anderen Begriff von rekursiven Funktionen, der
+Turing-äquivalent ist?
+:::
+
+::: defi
+Die Menge $M$ der *$\mu$-rekursiven Funktionen*:
+
+- Alle primitiv rekursiven Funktionen sind in $M$ enthalten
+- Alle Funktionen sind enthalten, die durch Anwendung des *$\mu$-Operators* aus primitiv rekursiven Funktionen gebaut werden können:`\\`{=tex} Sei $f:\N^{k+1}\to\N$ eine (möglicherweise partielle) Funktion. Dann ist $\mu f:\N^k\to\N$ definiert als $$(\mu f)(x_1,...,x_k)=\min{\{m\in\N_0\mid f(m,x_1,...,x_k)=0\land\forall u<m\exists f(u,x_1,...,x_k)\}}$$ Falls die Menge leer ist, ist $(\mu f)(x_1,...,x_k)$ undefiniert.
+:::
+
+::: bem
+Der Hauptunterschied zur primitiven Rekursion:
+
+- Man bildet ein Minimum über die Menge $\{u\mid f(u,...)=0\}$, deren Anzahl zuvor gar nicht bekannt ist.
+- Analog zum Unterschied `for` (*feste Anzahl*) und `while` (*beliebig hohe Anzahl*, partiell erlaubt)
+:::
+
+::: satz
+Die Menge der $\mu$-rekursiven Funktionen stimmt genau mit der Menge der `while`-berechenbaren Funktionen überein.
+
+::: proof
+Siehe Vorlesung. \qed
+:::
+:::
+
+::: motiv
+
+- primitiv rekursiv $\equiv$ `for`
+- $\mu$-rekursiv $\equiv$ `while`
+- `for` $\preccurlyeq$ `while`, aber nicht umgekehrt
+
+Es muss Funktionen geben, die $\mu$-rekursiv, aber nicht primitiv rekursiv sind.
+:::
+
+## Ackermann-Funktion
+
+::: defi
+Ackermann-Funktion: $a:\N^2_0\to\N$, Basisfälle:
+
+- $a(0,y)=y+1$, für $y>0$
+- $a(x,0)=a(x-1,1)$ für $x>0$
+
+Rekursion:
+
+- $a(x,y)=a(x-1,a(x,y-1))$ für $x,y>0$
+
+:::
+
+## Church-Turing-These
+
+::: motiv
+Aha interessant, Modelle von Turing, Church und Gödel scheinen berechenbarkeitsäquivalent zu sein -- weird!
+
+Vielleicht ist ja einfach alles äquivalent haha.
+:::
+
+::: hypo
+
+- Alles, was "intuitiv" berechnet werden kann, kann auch von einer Turingmaschine berechnet werden.
+- Jede "effektiv berechenbare" Funktion kann von einer TM berechnet werden.
+- Jeder "Algorithmus" kann mithilfe einer Turingmaschine implementiert werden.
+- Jedes endliche physikalische System kann bis zu jeder vorgegebenen Genauigkeit genau auf einer Turingmaschine simuliert werden.
+
+:::
+
+::: bem
+Kann nicht bewiesen/widerlegt werden, weil es nicht wirklich eine mathematische Aussage ist. Es ist eine Vermutung über die Beschaffenheit der Welt.
+:::
+
+::: motiv
+- Quantencomputer sind Turing-äquivalent
+- "Hypercomputing" -- formal mächtiger als TMs aber physikalisch ggf. nicht möglich
+- "Neuronale Netze" sind oft Turing-äquivalent
+:::
+
+## Der Unvollständigkeitssatz von Gödel
+
+::: satz
+Jedes Beweissystem für die Menge der wahren arithmetischen Formeln ist notwendigerweise unvollständig: Es gibt immer whare arithmetische Formeln, die nicht beweisbar sind.
+:::
+
+::: defi
+Ein *Term* wird induktiv wie folgt definiert:
+
+- Jedes $n\in\N$ ist ein Term
+- Jede *Variable $x_i$* ($i\in\N$) ist ein Term
+- Wenn $t_1,t_2$ Terme sind, dann auch $(t_1+t_2)$ und $(t_1\cdot t_2)$
+
+Eine *Formel* wird induktiv wie folgt definiert:
+
+- Wenn $t_1,t_2$ Terme sind, dann ist $(t_1=t_2)$ eine Formel
+- $F,G$ Formeln, dann sind auch $\neg F$, $(F\land G)$ und $(F\lor G)$ Formeln
+- Wenn $x$ eine Variable und $F$ eine Formel ist, dann sind auch $\exists xF$ und $\forall xF$ Formeln
+:::
+
+::: bsp
+$$\forall x\exists y\forall z(((x\cdot y)=z)\land((1+x)=x\cdot y))$$
+:::
+
+::: defi
+Eine Funktion $f:\N^k\to\N$ ist *arithmetisch repräsentierbar*, falls es eine arithmetische Formel $F(x_1,...,x_k,y)$ gibt, sodass gilt: $$f(n_1,n_2,...,n_k)=m\iff F(n_1,...,n_k,m)$$ ist wahr.
+:::
+
+# TODO (mehrere)
+
+# 
